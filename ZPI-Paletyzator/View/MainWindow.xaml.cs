@@ -12,8 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZPI_Paletyzator.ViewModel;
+using ZPI_Paletyzator.Model;
 
-namespace ZPI_Paletyzator
+namespace ZPI_Paletyzator.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -22,6 +24,8 @@ namespace ZPI_Paletyzator
     {
         public MainWindow()
         {
+            FibonacciViewModel mainWindowViewModel = new FibonacciViewModel();
+            DataContext = mainWindowViewModel;
             InitializeComponent();
         }
     }
