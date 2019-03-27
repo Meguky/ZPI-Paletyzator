@@ -13,27 +13,41 @@ namespace ZPI_Paletyzator.ViewModel
     public class FibonacciViewModel : ViewModelBase
     {
         private Fibonacci _fib = new Fibonacci();
-        private readonly DelegateCommand _changeFibNum;
-        public ICommand ChangeFibNumCommand => _changeFibNum;
+        private double _fibNum;
+        private double _fibNumPrev;
+        private readonly DelegateCommand _changeFibNumCommand;
+        public ICommand ChangeFibNumCommand => _changeFibNumCommand;
 
         public FibonacciViewModel()
         {
-            _changeFibNum = new DelegateCommand(OnChangeFibNum);
+            _changeFibNumCommand = new DelegateCommand(OnChangeFibNum, CanChangeName);
+            FibNum = _fib.fibNum;
+            FibNumPrev = _fib.fibNumPrev;
         }
 
         private void OnChangeFibNum(object commandParameter)
         {
             _fib.calculateNext();
+            FibNum = _fib.fibNum;
+            FibNumPrev = _fib.fibNumPrev;
+            _changeFibNumCommand.InvokeCanExecuteChanged();
         }
         
+        private bool CanChangeName(object commandParameter)
+        {
+            return FibNum < 10000000;
+        }
+
         public double FibNum{
-            get => _fib.FibNum;
-            set => SetProperty(ref _fib.FibNum, value);
+            get => _fibNum;
+            set => SetProperty(ref _fibNum, value);
         }
         public double FibNumPrev
         {
-            get => _fib.FibNumPrev;
-            set => SetProperty(ref _fib.FibNumPrev, value);
+            get => _fibNumPrev;
+            set => SetProperty(ref _fibNumPrev, value);
         }
+
+
     }
 }

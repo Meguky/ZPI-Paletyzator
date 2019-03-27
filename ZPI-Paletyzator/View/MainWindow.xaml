@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZPI_Paletyzator.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Height="419" VerticalAlignment="Top">
-        <Button Command="{Binding Path=ChangeFibNumCommand}" Content="Button" HorizontalAlignment="Left" Margin="278,141,0,0" VerticalAlignment="Top" Width="232" Height="55"/>
-        <TextBox Text="{Binding Path=FibNum}" HorizontalAlignment="Left" Height="126" Margin="464,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318"/>
-        <TextBox Text="{Binding Path=FibNumPrev}" HorizontalAlignment="Left" Height="126" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318"/>
+        Title="MainWindow" Height="300" Width="406.303">
+    <Grid Height="269" VerticalAlignment="Top">
+        <Button Command="{Binding Path=ChangeFibNumCommand}" Content="Calculate next fibonacci number" HorizontalAlignment="Left" Margin="10,187,0,0" Width="372" Height="55" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Path=FibNum}" HorizontalAlignment="Left" Height="71" Margin="216,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
+        <TextBox Text="{Binding Path=FibNumPrev}" HorizontalAlignment="Left" Height="71" Margin="10,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
+        <Label Content="Previous number" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.054,0.468" Width="166"/>
+        <Label Content="Current number" HorizontalAlignment="Left" Margin="216,10,0,0" VerticalAlignment="Top" Width="166"/>
 
     </Grid>
 </Window>
