@@ -10,27 +10,27 @@ namespace ModelTests
         [SetUp]
         public void Setup()
         {
-            fib.FibNum = 2;
-            fib.FibNumPrev = 1;
+            fib.fibNum = 2;
+            fib.fibNumPrev = 1;
         }
 
         [Test]
         public void isPrevNumCalculated()
         {
             fib.calculateNext();
-            Assert.AreEqual(prevExpected, fib.FibNumPrev);
+            Assert.AreEqual(prevExpected, fib.fibNumPrev);
         }
         [Test]
         public void isNextNumNotTheSame()
         {
             fib.calculateNext();
-            Assert.AreNotEqual(prevExpected, fib.FibNum);
+            Assert.AreNotEqual(prevExpected, fib.fibNum);
         }
         [Test]
         public void isNextNumCalculated()
         {
             fib.calculateNext();
-            Assert.AreEqual(nextExpected, fib.FibNum);
+            Assert.AreEqual(nextExpected, fib.fibNum);
         }
     }
 }

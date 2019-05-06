@@ -24,6 +24,11 @@ namespace ZPI_Paletyzator.Helper
             _canExecuteAction = canExecuteAction;
         }
 
+        public DelegateCommand(Action<Object> executeAction)
+        {
+            _executeAction = executeAction;
+        }
+
         public void Execute(object parameter) => _executeAction(parameter);
 
         public event EventHandler CanExecuteChanged;

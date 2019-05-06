@@ -24,7 +24,7 @@ namespace ZPI_Paletyzator.View
     {
         public MainWindow()
         {
-            FibonacciViewModel mainWindowViewModel = new FibonacciViewModel();
+            MainWindowViewModel mainWindowViewModel = new MainWindowViewModel();
             DataContext = mainWindowViewModel;
             InitializeComponent();
         }

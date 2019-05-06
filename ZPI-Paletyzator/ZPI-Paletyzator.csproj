@@ -71,8 +71,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helper\DelegateCommand.cs" />
-    <Compile Include="Model\Fibonacci.cs" />
-    <Compile Include="ViewModel\FibonacciViewModel.cs" />
+    <Compile Include="Model\OptimizationMain.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
