@@ -5,30 +5,136 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZPI_Paletyzator.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="535.294" Width="1000">
+        Title="Palletizer layout calculation" 
+        Height="Auto" Width="Auto"
+        SizeToContent="WidthAndHeight">
+
     <Grid>
-        <Label Content="PackageInfo" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="25"/>
-        <Separator HorizontalAlignment="Left" Height="5" Margin="10,53,0,0" VerticalAlignment="Top" Width="500" Opacity="0.25"/>
-        <Label Content="Height" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" FontSize="15" Width="85"/>
-        <TextBox Text="{Binding Path=PackageHeight}" HorizontalAlignment="Left" Height="30" Margin="100,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
-        <Label Content="Width" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" FontSize="15" Width="85"/>
-        <TextBox Text="{Binding Path=PackageWidth}" HorizontalAlignment="Left" Height="30" Margin="100,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
-        <Label Content="Length" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top" FontSize="15" Width="85"/>
-        <TextBox Text="{Binding Path=PackageLength}" HorizontalAlignment="Left" Height="30" Margin="100,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
-        <Label Content="Weight" HorizontalAlignment="Left" Margin="10,167,0,0" VerticalAlignment="Top" FontSize="15" Width="85"/>
-        <TextBox Text="{Binding Path=PackageWeight}" HorizontalAlignment="Left" Height="30" Margin="100,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
-        <CheckBox Content="seam at the beginning" Command="{Binding Path=seamAtBeginCommand}" HorizontalAlignment="Left" Margin="100,215,0,0" VerticalAlignment="Top"/>
-        <Label Content="PalleteInfo" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" FontSize="25"/>
-        <Separator HorizontalAlignment="Left" Height="5" Margin="10,279,0,0" VerticalAlignment="Top" Width="500" Opacity="0.25"/>
-        <Label Content="Width" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" FontSize="15" Width="85"/>
-        <TextBox Text="{Binding PalleteWidth}" HorizontalAlignment="Left" Height="30" Margin="100,289,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
-        <Label Content="Length" HorizontalAlignment="Left" Margin="10,324,0,0" VerticalAlignment="Top" FontSize="15" Width="85"/>
-        <TextBox Text="{Binding PalleteLength}" HorizontalAlignment="Left" Height="30" Margin="100,324,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
-        <Label Content="Max weight" HorizontalAlignment="Left" Margin="10,359,0,0" VerticalAlignment="Top" FontSize="15" Width="85"/>
-        <TextBox Text="{Binding PalleteMaxHeight}" HorizontalAlignment="Left" Height="30" Margin="100,359,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
-        <Label Content="Max height" HorizontalAlignment="Left" Margin="10,394,0,0" VerticalAlignment="Top" FontSize="15" Width="85"/>
-        <TextBox Text="{Binding PalleteMaxWeight}" HorizontalAlignment="Left" Height="30" Margin="100,394,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166"/>
-        <Button Command="{Binding Path=calculateCommand}" Content="Calculate" HorizontalAlignment="Left" Margin="10,441,0,0" Width="256" Height="36" VerticalAlignment="Top"/>
-        <TextBox Text="{Binding Path=CalculateOutput}" HorizontalAlignment="Left" Height="36" Margin="271,441,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+
+            <Grid Margin="10 0 0 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="1">
+
+                    <Label Content="Package Parameters" FontSize="20" FontWeight="DemiBold" Margin="0 0 5 0"/>
+                    <Separator Opacity="0.25"/>
+
+                    <Grid Margin="0 0 5 0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" ></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Height:" Grid.Row="0" Grid.Column="0"/>
+                        <TextBox Text="{Binding Path=PackageHeight}" Margin="0 2" Grid.Row="0" Grid.Column="1"/>
+                        <Label Content="Width:" Grid.Row="1" Grid.Column="0"/>
+                        <TextBox Text="{Binding Path=PackageWidth}" Margin="0 2" Grid.Row="1" Grid.Column="1"/>
+                        <Label Content="Length:" Grid.Row="2" Grid.Column="0"/>
+                        <TextBox Text="{Binding Path=PackageLength}" Margin="0 2" Grid.Row="2" Grid.Column="1"/>
+                        <Label Content="Weight:" Grid.Row="3" Grid.Column="0"/>
+                        <TextBox Text="{Binding Path=PackageWeight}" Margin="0 2" Grid.Row="3" Grid.Column="1"/>
+
+                    </Grid>
+                    
+                    <CheckBox Content="Seam facing front of the production line" Command="{Binding Path=seamFacingFrontCommand}" Margin="10"/>
+
+                </StackPanel>
+
+                <StackPanel Grid.Row="2">
+
+                    <Label Content="Palette Patameters" FontSize="20" FontWeight="DemiBold" Margin="0 0 5 0"/>
+                    <Separator Opacity="0.25"/>
+                    
+                    <Grid Margin="0 0 5 0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Width:" Grid.Row="0" Grid.Column="0"/>
+                        <TextBox Text="{Binding PalleteWidth}" Margin="0 2" Grid.Row="0" Grid.Column="1"/>
+                        <Label Content="Length:" Grid.Row="1" Grid.Column="0" />
+                        <TextBox Text="{Binding PalleteLength}" Margin="0 2" Grid.Row="1" Grid.Column="1"/>
+                        <Label Content="Max weight:" Grid.Row="2" Grid.Column="0" />
+                        <TextBox Text="{Binding PalleteMaxHeight}" Margin="0 2" Grid.Row="2" Grid.Column="1"/>
+                        <Label Content="Max height:" Grid.Row="3" Grid.Column="0"/>
+                        <TextBox Text="{Binding PalleteMaxWeight}" Margin="0 2" Grid.Row="3" Grid.Column="1"/>
+
+                    </Grid>
+                    
+                </StackPanel>
+
+                <Grid Grid.Row="3" Margin="0 10 5 10">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Command="{Binding Path=calculateCommand}" Content="Calculate" FontSize="14" FontWeight="Bold" Padding="5 2" Margin="5" Grid.Column="0" />
+                    <TextBox Text="{Binding Path=CalculateOutput}" Grid.Column="1" Margin="0 5" />
+                    
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+        <Viewport3D Grid.Column="1" MinHeight="400" MinWidth="500" Margin="10">
+            <Viewport3D.Camera>
+                <PerspectiveCamera Position = "2,0,10" LookDirection = "0.2,0.4,-1"
+               FieldOfView = "65" UpDirection = "0,1,0" />
+            </Viewport3D.Camera>
+
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <AmbientLight Color = "Bisque" />
+
+                        <GeometryModel3D>
+                            <GeometryModel3D.Geometry>
+                                <MeshGeometry3D Positions = "0,0,0 0,8,0 10,0,0 8,8,0"
+                           Normals = "0,0,1 0,0,1 0,0,1 0,0,1" TriangleIndices = "0,2,1 1,2,3"/>
+                            </GeometryModel3D.Geometry>
+
+                            <GeometryModel3D.Material>
+                                <DiffuseMaterial Brush = "Bisque" />
+                            </GeometryModel3D.Material>
+                        </GeometryModel3D>
+
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+        </Viewport3D>
+        
     </Grid>
+    
 </Window>

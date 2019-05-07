@@ -13,24 +13,24 @@ namespace ZPI_Paletyzator.ViewModel
     {
         OptimizationMain optimization = new OptimizationMain();
         private readonly DelegateCommand _calculateCommand;
-        private readonly DelegateCommand _seamAtBeginCommand;
+        private readonly DelegateCommand _seamFacingFrontCommand;
         private double _packageHeight;
         private double _packageWidth;
         private double _packageLength;
         private double _packageWeight;
-        private bool _seamAtBegin;
+        private bool _seamFacingFront;
         private double _palleteWidth;
         private double _palleteLength;
         private double _palleteMaxWeight;
         private double _palleteMaxHeight;
         private double _calculateOutput;
         public ICommand calculateCommand => _calculateCommand;
-        public ICommand seamAtBeginCommand => _seamAtBeginCommand;
+        public ICommand seamFacingFrontCommand => _seamFacingFrontCommand;
         public MainWindowViewModel()
         {
             _calculateCommand = new DelegateCommand(calculate, canCalculate);
-            _seamAtBeginCommand = new DelegateCommand(changeSeamPosition);
-            _seamAtBegin = false;
+            _seamFacingFrontCommand = new DelegateCommand(changeSeamPosition);
+            _seamFacingFront = false;
         }
 
         private void calculate(object commandParameter)
@@ -39,7 +39,7 @@ namespace ZPI_Paletyzator.ViewModel
             optimization.packageWidth = _packageWidth;
             optimization.packageLength = _packageLength;
             optimization.packageWeight = _packageWeight;
-            optimization.seamAtBegin = _seamAtBegin;
+            optimization.seamFacingFront = _seamFacingFront;
 
             optimization.palleteWidth = _palleteWidth;
             optimization.palleteLength = _palleteLength;
@@ -55,7 +55,7 @@ namespace ZPI_Paletyzator.ViewModel
 
         private void changeSeamPosition(object commandParameter)
         {
-            _seamAtBegin = !_seamAtBegin;
+            _seamFacingFront = !_seamFacingFront;
         }
 
         public double PackageHeight
