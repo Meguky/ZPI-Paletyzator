@@ -20,7 +20,7 @@ namespace ZPI_Paletyzator.Model
         public double palleteMaxWeight;
        
 
-        public double calculate()
+        public double Calculate()
         {
             if (seamFacingFront)
             {
