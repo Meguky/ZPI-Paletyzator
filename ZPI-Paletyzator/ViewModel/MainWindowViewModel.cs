@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 using System.Windows.Input;
 using ZPI_Paletyzator.Helper;
 using ZPI_Paletyzator.Model;
+using ZPI_Paletyzator.View;
 
 namespace ZPI_Paletyzator.ViewModel
 {
     class MainWindowViewModel : ViewModelBase
     {
-        OptimizationMain optimization = new OptimizationMain();
+        private OptimizationMain optimization = new OptimizationMain();
         private readonly DelegateCommand _calculateCommand;
         private readonly DelegateCommand _seamFacingFrontCommand;
         private double _packageHeight;
@@ -24,16 +26,20 @@ namespace ZPI_Paletyzator.ViewModel
         private double _palleteMaxWeight;
         private double _palleteMaxHeight;
         private double _calculateOutput;
-        public ICommand calculateCommand => _calculateCommand;
-        public ICommand seamFacingFrontCommand => _seamFacingFrontCommand;
+
+        public ViewPortInit ViewPortSource { get; private set; }
+
+        public ICommand CalculateCommand => _calculateCommand;
+        public ICommand SeamFacingFrontCommand => _seamFacingFrontCommand;
         public MainWindowViewModel()
         {
-            _calculateCommand = new DelegateCommand(calculate, canCalculate);
-            _seamFacingFrontCommand = new DelegateCommand(changeSeamPosition);
+            _calculateCommand = new DelegateCommand(Calculate, CanCalculate);
+            _seamFacingFrontCommand = new DelegateCommand(ChangeSeamPosition);
             _seamFacingFront = false;
+            ViewPortSource = new ViewPortInit();
         }
 
-        private void calculate(object commandParameter)
+        private void Calculate(object commandParameter)
         {
             optimization.packageHeight = _packageHeight;
             optimization.packageWidth = _packageWidth;
@@ -45,15 +51,15 @@ namespace ZPI_Paletyzator.ViewModel
             optimization.palleteLength = _palleteLength;
             optimization.palleteMaxWeight = _palleteMaxWeight;
             optimization.palleteMaxHeight = _palleteMaxHeight;
-            CalculateOutput = optimization.calculate();
+            CalculateOutput = optimization.Calculate();
         }
 
-        private bool canCalculate(object commandParameter)
+        private bool CanCalculate(object commandParameter)
         {
             return true;
         }
 
-        private void changeSeamPosition(object commandParameter)
+        private void ChangeSeamPosition(object commandParameter)
         {
             _seamFacingFront = !_seamFacingFront;
         }
