@@ -40,13 +40,13 @@ namespace ZPI_Paletyzator.View
                 4,0,3
             };
 
-            MeshGeometry3D palletFlatMesh = new MeshGeometry3D()
+            MeshGeometry3D palletFlatMesh = new MeshGeometry3D
             {
                 Positions = palletFlatMeshPoints,
                 TriangleIndices = triangleIndicesFlat
             };
 
-            GeometryModel3D palletFlat = new GeometryModel3D()
+            GeometryModel3D palletFlat = new GeometryModel3D
             {
                 Geometry = palletFlatMesh
             };
@@ -57,6 +57,8 @@ namespace ZPI_Paletyzator.View
 
             return palletFlat;
         }
+
+
 
         public static Model3DGroup GroundPartsGenerator()
         {
@@ -90,12 +92,12 @@ namespace ZPI_Paletyzator.View
                 7,6,5
             };
 
-            MeshGeometry3D palletGroundPartMesh = new MeshGeometry3D()
+            MeshGeometry3D palletGroundPartMesh = new MeshGeometry3D
             {
                 Positions = palletGroundPartMeshPoints,
                 TriangleIndices = triangleIndicesGroundPart
             };
-            GeometryModel3D palletGroundPart = new GeometryModel3D()
+            GeometryModel3D palletGroundPart = new GeometryModel3D
             {
                 Geometry = palletGroundPartMesh
             };
