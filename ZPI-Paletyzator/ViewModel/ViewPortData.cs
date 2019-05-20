@@ -5,16 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using ZPI_Paletyzator.View;
 
 namespace ZPI_Paletyzator.View
 {
-    class ViewPortInit
+    class ViewPortData
     {
         public PerspectiveCamera MainCamera { get; private set; }
         public Model3DGroup LightModel { get; private set; }
         public Model3DGroup ModelSource { get; private set; }
 
-        public ViewPortInit()
+        public ViewPortData()
         {
             MainCamera = new PerspectiveCamera()
             {
@@ -28,8 +29,8 @@ namespace ZPI_Paletyzator.View
             LightModel.Children.Add(myAmbientLight);
 
             ModelSource = new Model3DGroup();
-            ModelSource.Children.Add(View.PaletteGenerator.FlatPartGenerator());
-            ModelSource.Children.Add(View.PaletteGenerator.GroundPartsGenerator());
+            ModelSource.Children.Add(PaletteGenerator.FlatPartGenerator());
+            ModelSource.Children.Add(PaletteGenerator.GroundPartsGenerator());
         }
     }
 }

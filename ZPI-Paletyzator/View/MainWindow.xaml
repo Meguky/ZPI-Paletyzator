@@ -110,19 +110,17 @@
 
         <Viewport3D Grid.Column="1" MinHeight="400" MinWidth="500" Margin="10">
             <Viewport3D.Camera>
-                <PerspectiveCamera Position = "{Binding ViewPortSource.MainCamera.Position}" LookDirection = "{Binding ViewPortSource.MainCamera.LookDirection}"
-                                                                          FieldOfView ="{Binding ViewPortSource.MainCamera.FieldOfView}" UpDirection = "0,1,0" />
+                <PerspectiveCamera Position = "{Binding ViewPortDataSource.MainCamera.Position}" LookDirection = "{Binding ViewPortDataSource.MainCamera.LookDirection}"
+                                                                          FieldOfView ="{Binding ViewPortDataSource.MainCamera.FieldOfView}" UpDirection = "0,1,0" />
             </Viewport3D.Camera>
             
             <Viewport3D.Children>
-                
-                <ModelVisual3D Content="{Binding ViewPortSource.ModelSource}"/>
 
-                <ModelVisual3D Content="{Binding ViewPortSource.LightModel}"/>
+                <ModelVisual3D Content="{Binding ViewPortDataSource.ModelSource}"/>
 
-            </Viewport3D.Children>
+                <ModelVisual3D Content="{Binding ViewPortDataSource.LightModel}"/>
 
-               <!-- <ModelVisual3D.Content>
+                <!-- <ModelVisual3D.Content>
                     <Model3DGroup>
                         <AmbientLight Color = "Bisque" />
 
@@ -139,7 +137,8 @@
 
                     </Model3DGroup>
                 </ModelVisual3D.Content> -->
-            
+                
+            </Viewport3D.Children>
         </Viewport3D>
         
     </Grid>

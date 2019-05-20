@@ -27,7 +27,7 @@ namespace ZPI_Paletyzator.ViewModel
         private double _palleteMaxHeight;
         private double _calculateOutput;
 
-        public ViewPortInit ViewPortSource { get; private set; }
+        public ViewPortData ViewPortDataSource { get; private set; }
 
         public ICommand CalculateCommand => _calculateCommand;
         public ICommand SeamFacingFrontCommand => _seamFacingFrontCommand;
@@ -36,7 +36,7 @@ namespace ZPI_Paletyzator.ViewModel
             _calculateCommand = new DelegateCommand(Calculate, CanCalculate);
             _seamFacingFrontCommand = new DelegateCommand(ChangeSeamPosition);
             _seamFacingFront = false;
-            ViewPortSource = new ViewPortInit();
+            ViewPortDataSource = new ViewPortData();
         }
 
         private void Calculate(object commandParameter)
