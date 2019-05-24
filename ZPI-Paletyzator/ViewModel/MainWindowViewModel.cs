@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using System.Windows.Input;
 using ZPI_Paletyzator.Helper;
 using ZPI_Paletyzator.Model;
 using ZPI_Paletyzator.View;
+
 
 namespace ZPI_Paletyzator.ViewModel
 {
@@ -16,7 +19,7 @@ namespace ZPI_Paletyzator.ViewModel
         private OptimizationMain optimization = new OptimizationMain();
         private readonly DelegateCommand _calculateCommand;
         private readonly DelegateCommand _seamFacingFrontCommand;
-        private readonly DelegateCommand _leftClickDelegate;
+        private readonly DelegateCommand _leftClickCommand;
         private double _packageHeight;
         private double _packageWidth;
         private double _packageLength;
@@ -28,25 +31,26 @@ namespace ZPI_Paletyzator.ViewModel
         private double _palleteMaxHeight;
         private double _calculateOutput;
 
-        public int a = 0;
+        public int a = 1;
 
         public ViewPortData ViewPortDataSource { get; private set; }
 
         public ICommand CalculateCommand => _calculateCommand;
         public ICommand SeamFacingFrontCommand => _seamFacingFrontCommand;
-        public ICommand LeftClickCommand => _leftClickDelegate;
+        public ICommand LeftClickCommand => _leftClickCommand;
 
         public MainWindowViewModel()
         {
             _calculateCommand = new DelegateCommand(Calculate, CanCalculate);
             _seamFacingFrontCommand = new DelegateCommand(ChangeSeamPosition);
-            _leftClickDelegate = new DelegateCommand(Dodaj);
+            _leftClickCommand = new DelegateCommand(Dodaj);
             _seamFacingFront = false;
             ViewPortDataSource = new ViewPortData();
         }
 
         private void Dodaj(object commandObject)
         {
+            //PalleteMaxHeight = 
             PalleteLength = a++;
         }
        
@@ -123,5 +127,61 @@ namespace ZPI_Paletyzator.ViewModel
             get => _calculateOutput;
             set => SetProperty(ref _calculateOutput, value);
         }
+
+        private ICommand _myCommand;
+
+        public ICommand MyCommand
+        {
+            get
+            {
+                if (_myCommand == null)
+                {
+                    _myCommand = new RelayCommand(CatchMouse, obj => true);
+                }
+                return _myCommand;
+            }
+        }
+
+        public void CatchMouse(object obj)
+        {
+            if (obj != null)
+            {
+                Point currentPoint = Mouse.GetPosition(obj as UIElement);
+                PalleteMaxHeight = currentPoint.X;
+            }
+        }
+    }
+
+
+
+
+
+    public class RelayCommand : ICommand
+    {
+        private Predicate<object> _canExecute;
+        private Action<object> _execute;
+
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        {
+            this._canExecute = canExecute;
+            this._execute = execute;
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute(parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            _execute(parameter);
+        }
     }
 }
+
