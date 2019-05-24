@@ -28,5 +28,10 @@ namespace ZPI_Paletyzator.View
             DataContext = mainWindowViewModel;
             InitializeComponent();
         }
+
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace ZPI_Paletyzator.ViewModel
         private OptimizationMain optimization = new OptimizationMain();
         private readonly DelegateCommand _calculateCommand;
         private readonly DelegateCommand _seamFacingFrontCommand;
+        private readonly DelegateCommand _leftClickDelegate;
         private double _packageHeight;
         private double _packageWidth;
         private double _packageLength;
@@ -27,17 +28,28 @@ namespace ZPI_Paletyzator.ViewModel
         private double _palleteMaxHeight;
         private double _calculateOutput;
 
+        public int a = 0;
+
         public ViewPortData ViewPortDataSource { get; private set; }
 
         public ICommand CalculateCommand => _calculateCommand;
         public ICommand SeamFacingFrontCommand => _seamFacingFrontCommand;
+        public ICommand LeftClickCommand => _leftClickDelegate;
+
         public MainWindowViewModel()
         {
             _calculateCommand = new DelegateCommand(Calculate, CanCalculate);
             _seamFacingFrontCommand = new DelegateCommand(ChangeSeamPosition);
+            _leftClickDelegate = new DelegateCommand(Dodaj);
             _seamFacingFront = false;
             ViewPortDataSource = new ViewPortData();
         }
+
+        private void Dodaj(object commandObject)
+        {
+            PalleteLength = a++;
+        }
+       
 
         private void Calculate(object commandParameter)
         {
