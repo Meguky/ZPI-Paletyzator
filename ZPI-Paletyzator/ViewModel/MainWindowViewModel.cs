@@ -19,7 +19,6 @@ namespace ZPI_Paletyzator.ViewModel
         private OptimizationMain optimization = new OptimizationMain();
         private readonly DelegateCommand _calculateCommand;
         private readonly DelegateCommand _seamFacingFrontCommand;
-        private readonly DelegateCommand _leftClickCommand;
         private double _packageHeight;
         private double _packageWidth;
         private double _packageLength;
@@ -37,21 +36,13 @@ namespace ZPI_Paletyzator.ViewModel
 
         public ICommand CalculateCommand => _calculateCommand;
         public ICommand SeamFacingFrontCommand => _seamFacingFrontCommand;
-        public ICommand LeftClickCommand => _leftClickCommand;
 
         public MainWindowViewModel()
         {
             _calculateCommand = new DelegateCommand(Calculate, CanCalculate);
             _seamFacingFrontCommand = new DelegateCommand(ChangeSeamPosition);
-            _leftClickCommand = new DelegateCommand(Dodaj);
             _seamFacingFront = false;
             ViewPortDataSource = new ViewPortData();
-        }
-
-        private void Dodaj(object commandObject)
-        {
-            //PalleteMaxHeight = 
-            PalleteLength = a++;
         }
        
 
@@ -69,6 +60,7 @@ namespace ZPI_Paletyzator.ViewModel
             optimization.palleteMaxHeight = _palleteMaxHeight;
             CalculateOutput = optimization.Calculate();
         }
+
 
         private bool CanCalculate(object commandParameter)
         {
@@ -127,61 +119,7 @@ namespace ZPI_Paletyzator.ViewModel
             get => _calculateOutput;
             set => SetProperty(ref _calculateOutput, value);
         }
-
-        private ICommand _myCommand;
-
-        public ICommand MyCommand
-        {
-            get
-            {
-                if (_myCommand == null)
-                {
-                    _myCommand = new RelayCommand(CatchMouse, obj => true);
-                }
-                return _myCommand;
-            }
-        }
-
-        public void CatchMouse(object obj)
-        {
-            if (obj != null)
-            {
-                Point currentPoint = Mouse.GetPosition(obj as UIElement);
-                PalleteMaxHeight = currentPoint.X;
-            }
-        }
     }
 
-
-
-
-
-    public class RelayCommand : ICommand
-    {
-        private Predicate<object> _canExecute;
-        private Action<object> _execute;
-
-        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
-        {
-            this._canExecute = canExecute;
-            this._execute = execute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute(parameter);
-        }
-
-        public void Execute(object parameter)
-        {
-            _execute(parameter);
-        }
-    }
 }
 

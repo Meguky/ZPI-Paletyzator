@@ -93,7 +93,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="View\PaletteGenerator.cs" />
-    <Compile Include="ViewModel\ViewPortData.cs" />
+    <Compile Include="View\ViewPortData.cs" />
+    <Compile Include="View\ReleyCommand.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
