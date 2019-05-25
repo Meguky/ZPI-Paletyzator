@@ -37,7 +37,9 @@ namespace ZPI_Paletyzator.View
                 2,6,3,
                 3,6,7,
                 3,7,4,
-                4,0,3
+                4,0,3,
+                4,7,6,
+                6,5,4
             };
 
             MeshGeometry3D palletFlatMesh = new MeshGeometry3D
@@ -52,8 +54,7 @@ namespace ZPI_Paletyzator.View
             };
 
             SolidColorBrush FlatBrush = new SolidColorBrush(Colors.Tan);
-            DiffuseMaterial FlatMaterial = new DiffuseMaterial(FlatBrush);
-            palletFlat.Material = palletFlat.BackMaterial = FlatMaterial;
+            palletFlat.Material = new DiffuseMaterial(FlatBrush);
 
             return palletFlat;
         }
@@ -63,7 +64,7 @@ namespace ZPI_Paletyzator.View
         public static Model3DGroup GroundPartsGenerator()
         {
 
-            Model3DGroup groundGroup = new Model3DGroup();
+            var groundGroup = new Model3DGroup();
 
             Point3DCollection palletGroundPartMeshPoints = new Point3DCollection
             {
@@ -102,19 +103,17 @@ namespace ZPI_Paletyzator.View
                 Geometry = palletGroundPartMesh
             };
 
-            SolidColorBrush GroundBrush = new SolidColorBrush(Colors.Bisque);
-            DiffuseMaterial GroundEMaterial = new DiffuseMaterial(GroundBrush);
-            palletGroundPart.Material = palletGroundPart.BackMaterial = GroundEMaterial;
+            var GroundBrush = new SolidColorBrush(Colors.Bisque);
+            palletGroundPart.Material = new DiffuseMaterial(GroundBrush);
 
-
-            TranslateTransform3D trans2NdPart = new TranslateTransform3D(2.5, 0, 0);
-            TranslateTransform3D trans3RdPart = new TranslateTransform3D(5, 0, 0);
 
             groundGroup.Children.Add(palletGroundPart);
             groundGroup.Children.Add(palletGroundPart.Clone());
             groundGroup.Children.Add(palletGroundPart.Clone());
-            groundGroup.Children[1].Transform = trans2NdPart;
-            groundGroup.Children[2].Transform = trans3RdPart;
+
+
+            groundGroup.Children[1].Transform = new TranslateTransform3D(2.5, 0, 0);
+            groundGroup.Children[2].Transform = new TranslateTransform3D(5, 0, 0);
 
             return groundGroup;
         }

@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using System.Windows.Input;
 using ZPI_Paletyzator.Helper;
 using ZPI_Paletyzator.Model;
 using ZPI_Paletyzator.View;
+
 
 namespace ZPI_Paletyzator.ViewModel
 {
@@ -27,10 +30,13 @@ namespace ZPI_Paletyzator.ViewModel
         private double _palleteMaxHeight;
         private double _calculateOutput;
 
+        public int a = 1;
+
         public ViewPortData ViewPortDataSource { get; private set; }
 
         public ICommand CalculateCommand => _calculateCommand;
         public ICommand SeamFacingFrontCommand => _seamFacingFrontCommand;
+
         public MainWindowViewModel()
         {
             _calculateCommand = new DelegateCommand(Calculate, CanCalculate);
@@ -38,6 +44,7 @@ namespace ZPI_Paletyzator.ViewModel
             _seamFacingFront = false;
             ViewPortDataSource = new ViewPortData();
         }
+       
 
         private void Calculate(object commandParameter)
         {
@@ -53,6 +60,7 @@ namespace ZPI_Paletyzator.ViewModel
             optimization.palleteMaxHeight = _palleteMaxHeight;
             CalculateOutput = optimization.Calculate();
         }
+
 
         private bool CanCalculate(object commandParameter)
         {
@@ -112,4 +120,6 @@ namespace ZPI_Paletyzator.ViewModel
             set => SetProperty(ref _calculateOutput, value);
         }
     }
+
 }
+
