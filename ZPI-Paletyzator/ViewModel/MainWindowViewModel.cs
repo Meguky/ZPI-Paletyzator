@@ -19,6 +19,7 @@ namespace ZPI_Paletyzator.ViewModel
         private OptimizationMain optimization = new OptimizationMain();
         private readonly DelegateCommand _calculateCommand;
         private readonly DelegateCommand _seamFacingFrontCommand;
+        private readonly DelegateCommand _euroPaletteCommand;
         private double _packageHeight;
         private double _packageWidth;
         private double _packageLength;
@@ -29,6 +30,7 @@ namespace ZPI_Paletyzator.ViewModel
         private double _palleteMaxWeight;
         private double _palleteMaxHeight;
         private double _calculateOutput;
+        private bool UsingEuroPalette { get; set; }
 
         public int a = 1;
 
@@ -36,11 +38,13 @@ namespace ZPI_Paletyzator.ViewModel
 
         public ICommand CalculateCommand => _calculateCommand;
         public ICommand SeamFacingFrontCommand => _seamFacingFrontCommand;
+        public ICommand EuroPaletteCommand => _euroPaletteCommand;
 
         public MainWindowViewModel()
         {
             _calculateCommand = new DelegateCommand(Calculate, CanCalculate);
             _seamFacingFrontCommand = new DelegateCommand(ChangeSeamPosition);
+            _euroPaletteCommand = new DelegateCommand(EuroPalette);
             _seamFacingFront = false;
             ViewPortDataSource = new ViewPortData();
         }
@@ -64,7 +68,10 @@ namespace ZPI_Paletyzator.ViewModel
 
         private bool CanCalculate(object commandParameter)
         {
-            return true;
+            if (PackageHeight != 0 && PackageWidth != 0 && PackageLength != 0 && PackageWeight != 0 && PalleteWidth != 0 && PalleteLength != 0 && PalleteMaxWeight != 0 && PalleteMaxHeight != 0)
+                return true;
+            else
+                return false;
         }
 
         private void ChangeSeamPosition(object commandParameter)
@@ -72,47 +79,94 @@ namespace ZPI_Paletyzator.ViewModel
             _seamFacingFront = !_seamFacingFront;
         }
 
+        private void EuroPalette(object commandParameter)
+        {
+            UsingEuroPalette = ! UsingEuroPalette;
+            if (UsingEuroPalette)
+            {
+                PalleteWidth = 800;
+                PalleteLength = 1200;
+                PalleteMaxHeight = 2000;
+                PalleteMaxWeight = 1500;
+            }
+            else
+                PalleteWidth = PalleteLength = PalleteMaxWeight = 0;
+        }
+
+
         public double PackageHeight
         {
             get => _packageHeight;
-            set => SetProperty(ref _packageHeight, value);
+            set
+            {
+                SetProperty(ref _packageHeight, value);
+                _calculateCommand.InvokeCanExecuteChanged();
+            }
         }
 
         public double PackageWidth
         {
             get => _packageWidth;
-            set => SetProperty(ref _packageWidth, value);
+            set
+            {
+                SetProperty(ref _packageWidth, value);
+                _calculateCommand.InvokeCanExecuteChanged();
+            }
         }
 
         public double PackageLength
         {
             get => _packageLength;
-            set => SetProperty(ref _packageLength, value);
+            set
+            {
+                SetProperty(ref _packageLength, value);
+                _calculateCommand.InvokeCanExecuteChanged();
+            }
         }
         public double PackageWeight
         {
             get => _packageWeight;
-            set => SetProperty(ref _packageWeight, value);
+            set
+            {
+                SetProperty(ref _packageWeight, value);
+                _calculateCommand.InvokeCanExecuteChanged();
+            }
         }
         public double PalleteWidth
         {
             get => _palleteWidth;
-            set => SetProperty(ref _palleteWidth, value);
+            set
+            {
+                SetProperty(ref _palleteWidth, value);
+                _calculateCommand.InvokeCanExecuteChanged();
+            }
         }
         public double PalleteLength
         {
             get => _palleteLength;
-            set => SetProperty(ref _palleteLength, value);
+            set
+            {
+                SetProperty(ref _palleteLength, value);
+                _calculateCommand.InvokeCanExecuteChanged();
+            }
         }
         public double PalleteMaxWeight
         {
             get => _palleteMaxWeight;
-            set => SetProperty(ref _palleteMaxWeight, value);
+            set
+            {
+                SetProperty(ref _palleteMaxWeight, value);
+                _calculateCommand.InvokeCanExecuteChanged();
+            }
         }
         public double PalleteMaxHeight
         {
             get => _palleteMaxHeight;
-            set => SetProperty(ref _palleteMaxHeight, value);
+            set
+            {
+                SetProperty(ref _palleteMaxHeight, value);
+                _calculateCommand.InvokeCanExecuteChanged();
+            }
         }
         public double CalculateOutput
         {
@@ -120,6 +174,5 @@ namespace ZPI_Paletyzator.ViewModel
             set => SetProperty(ref _calculateOutput, value);
         }
     }
-
 }
 
