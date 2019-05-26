@@ -90,7 +90,7 @@ namespace ZPI_Paletyzator.ViewModel
                 PalleteMaxWeight = 1500;
             }
             else
-                PalleteWidth = PalleteLength = PalleteMaxWeight = 0;
+                PalleteWidth = PalleteLength = PalleteMaxHeight = PalleteMaxWeight = 0;
         }
 
 

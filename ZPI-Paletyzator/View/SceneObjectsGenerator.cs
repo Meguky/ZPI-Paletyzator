@@ -9,21 +9,21 @@ using System.Windows.Media;
 
 namespace ZPI_Paletyzator.View
 {
-    class PaletteGenerator
+    class SceneObjectsGenerator
     {
         public static GeometryModel3D FlatPartGenerator()
         {
             Point3DCollection palletFlatMeshPoints = new Point3DCollection
             {
-                new Point3D(-3, 0, -4),
-                new Point3D(-3, 0, 4),
-                new Point3D(3, 0, 4),
-                new Point3D(3, 0, -4),
+                new Point3D(-3, 0, -4.5),
+                new Point3D(-3, 0, 4.5),
+                new Point3D(3, 0, 4.5),
+                new Point3D(3, 0, -4.5),
 
-                new Point3D(-3, -0.4, -4),
-                new Point3D(-3, -0.4, 4),
-                new Point3D(3, -0.4, 4),
-                new Point3D(3, -0.4, -4)
+                new Point3D(-3, -0.4, -4.5),
+                new Point3D(-3, -0.4, 4.5),
+                new Point3D(3, -0.4, 4.5),
+                new Point3D(3, -0.4, -4.5)
             };
 
             Int32Collection triangleIndicesFlat = new Int32Collection
@@ -68,15 +68,15 @@ namespace ZPI_Paletyzator.View
 
             Point3DCollection palletGroundPartMeshPoints = new Point3DCollection
             {
-                new Point3D(-3, -0.4, -4),
-                new Point3D(-3, -0.4, 4),
-                new Point3D(-2, -0.4, 4),
-                new Point3D(-2, -0.4, -4),
+                new Point3D(-3, -0.4, -4.5),
+                new Point3D(-3, -0.4, 4.5),
+                new Point3D(-2, -0.4, 4.5),
+                new Point3D(-2, -0.4, -4.5),
 
-                new Point3D(-3, -0.8, -4),
-                new Point3D(-3, -0.8, 4),
-                new Point3D(-2, -0.8, 4),
-                new Point3D(-2, -0.8, -4)
+                new Point3D(-3, -0.8, -4.5),
+                new Point3D(-3, -0.8, 4.5),
+                new Point3D(-2, -0.8, 4.5),
+                new Point3D(-2, -0.8, -4.5)
             };
 
             Int32Collection triangleIndicesGroundPart = new Int32Collection

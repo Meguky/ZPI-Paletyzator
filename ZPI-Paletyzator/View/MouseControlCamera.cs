@@ -26,31 +26,26 @@ namespace ZPI_Paletyzator.View
         private double CameraPositionY { get; set; }
         private double CameraPositionZ { get; set; }
         private double CameraR { get; set; }
-        private double MaxCameraR { get; set; }
-        private double MinCameraR { get; set; }
+        private double AxisY { get; set; }
+        private double AxisOffsetY { get; set; }
         
         private PerspectiveCamera Camera { get; set; }
 
         private Action<PerspectiveCamera> CopyCamera;
 
         private double OldPanelWidth { get; set; }
-
-        private double AxisY { get; set; }
-        private double MaxAxisY { get; set; }
-        private double MinAxisY { get; set; }
-        private const int AxisOffset = 3;
+        double originalWidth = 0;
+        double originalHeight = 0;
 
         public MouseControlCamera (Action<PerspectiveCamera> getMainCamera)
         {
-            AxisY = MinAxisY = AxisOffset;
-            MaxAxisY = 10.5;
-            CameraR = MinCameraR = 20;
-            MaxCameraR = 35;
+            CameraR = 25;
+            AxisY = 2;
             Camera = new PerspectiveCamera()
             {
                 Position = new Point3D(CameraR, 0, 0),
                 LookDirection = new Vector3D(-CameraR, 0, 0),
-                FieldOfView = 60
+                FieldOfView = 45
             };
             CopyCamera = getMainCamera;
             Draw();
@@ -59,50 +54,35 @@ namespace ZPI_Paletyzator.View
 
         public void InitPanel(object obj)
         {
-            if (obj is Panel panObj)
+            if (obj is Panel PanelObject)
             {
-                Pix2AngleX = 360 * 0.01 / panObj.ActualWidth;
-                Pix2AngleY = 360 * 0.01 / panObj.ActualHeight;
-                OldPanelWidth = panObj.ActualWidth;
+                Pix2AngleX = 360 * 0.01 / PanelObject.ActualWidth;
+                Pix2AngleY = 360 * 0.01 / PanelObject.ActualHeight;
+                originalWidth = OldPanelWidth = PanelObject.ActualWidth;
+                originalHeight = PanelObject.ActualHeight;
             }
         }
 
         public void GetPanelSize(object obj)
         {
-            if (obj is Panel panObj)
+            if (obj is Panel PanelObject)
             {
-                Pix2AngleX = 360 * 0.01 / panObj.ActualWidth;
-                Pix2AngleY = 360 * 0.01 / panObj.ActualHeight;
+                double newWidth = PanelObject.ActualWidth;
+                double originalNearPlaneDistance = 0.125;
+                double originalFieldOfView = 45.0;
+                double scale = newWidth / originalWidth;
 
-                if (panObj.ActualWidth != OldPanelWidth)
-                {
-                    double deltaWidth = panObj.ActualWidth - OldPanelWidth;
-                    double x = 116;
-                    CameraR += deltaWidth / x; // (1660 - 500) / x; 
-                    MinCameraR += deltaWidth / x;
-                    MaxCameraR += deltaWidth / x;
+                double fov = Math.Atan(Math.Tan(originalFieldOfView / 2.0 / 180.0 * Math.PI) * scale) * 2.0;
+                Camera.FieldOfView = fov / Math.PI * 180.0;
+                Camera.NearPlaneDistance = originalNearPlaneDistance * scale;
 
-                    if (CameraR > MaxCameraR)
-                        CameraR = MaxCameraR;
-                    else if (CameraR < MinCameraR)
-                        CameraR = MinCameraR;
+                double heightRatio = PanelObject.ActualHeight / originalHeight;
+                AxisY = 2;
+                AxisY *= Math.Pow(heightRatio,2);
+                AxisY += AxisOffsetY;
 
-                    double ratio = (AxisY - MinAxisY) / (MaxAxisY - MinAxisY);
-                    MaxAxisY -= deltaWidth / 580;
-
-                    if (deltaWidth < 0)
-                    {
-                        AxisY = AxisOffset + MaxAxisY * ratio;      
-                    }
-
-                    if (AxisY > MaxAxisY)
-                        AxisY = MaxAxisY;
-                    if (AxisY < MinAxisY)
-                        AxisY = MinAxisY;
-                }
 
                 Draw();
-                OldPanelWidth = panObj.ActualWidth;
             }
         }
 
@@ -136,11 +116,12 @@ namespace ZPI_Paletyzator.View
                 if (MouseRightButtonStatus)
                 {
                     double newCameraR = CameraR + (deltaY * Pix2AngleY) * 10;
-                    if (newCameraR > MinCameraR && newCameraR < MaxCameraR)
+
+                    if (newCameraR >= 20 && newCameraR < 35)
                     {
-                        double delta = (MaxCameraR - MinCameraR) / (newCameraR - CameraR);
                         CameraR = newCameraR;
-                        AxisY += (MaxAxisY - MinAxisY) / delta;
+                        AxisY += (deltaY * Pix2AngleY) * 4;
+                        AxisOffsetY += (deltaY * Pix2AngleY) * 4;
                     }
                 }
 

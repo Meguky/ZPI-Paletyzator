@@ -62,9 +62,9 @@ namespace ZPI_Paletyzator.View
             LightModel.Children.Add(myAmbientLight);
 
             ModelSource = new Model3DGroup();
-            ModelSource.Children.Add(PaletteGenerator.FlatPartGenerator());
-            ModelSource.Children.Add(PaletteGenerator.GroundPartsGenerator());
-            ModelSource.Children.Add(PaletteGenerator.Ground());
+            ModelSource.Children.Add(SceneObjectsGenerator.FlatPartGenerator());
+            ModelSource.Children.Add(SceneObjectsGenerator.GroundPartsGenerator());
+            ModelSource.Children.Add(SceneObjectsGenerator.Ground());
 
             Transform3DGroup TranslationGroup = new Transform3DGroup();
             TranslationGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90)));
