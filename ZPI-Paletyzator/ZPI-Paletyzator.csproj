@@ -94,7 +94,7 @@
     </ApplicationDefinition>
     <Compile Include="Helper\TextBoxBehavior.cs" />
     <Compile Include="View\MouseControlCamera.cs" />
-    <Compile Include="View\PaletteGenerator.cs" />
+    <Compile Include="View\SceneObjectsGenerator.cs" />
     <Compile Include="View\ViewPortData.cs" />
     <Compile Include="View\ReleyCommand.cs" />
     <Page Include="View\MainWindow.xaml">
