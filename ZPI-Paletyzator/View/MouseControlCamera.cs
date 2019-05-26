@@ -31,18 +31,19 @@ namespace ZPI_Paletyzator.View
         
         private PerspectiveCamera Camera { get; set; }
 
-        Action<PerspectiveCamera> CopyCamera;
+        private Action<PerspectiveCamera> CopyCamera;
 
         private double OldPanelWidth { get; set; }
 
         private double AxisY { get; set; }
         private double MaxAxisY { get; set; }
         private double MinAxisY { get; set; }
+        private const int AxisOffset = 3;
 
         public MouseControlCamera (Action<PerspectiveCamera> getMainCamera)
         {
-            AxisY = MinAxisY = 3;
-            MaxAxisY = 10;
+            AxisY = MinAxisY = AxisOffset;
+            MaxAxisY = 10.5;
             CameraR = MinCameraR = 20;
             MaxCameraR = 35;
             Camera = new PerspectiveCamera()
@@ -86,7 +87,18 @@ namespace ZPI_Paletyzator.View
                     else if (CameraR < MinCameraR)
                         CameraR = MinCameraR;
 
-                    AxisY -= deltaWidth / (1160 / 2);
+                    double ratio = (AxisY - MinAxisY) / (MaxAxisY - MinAxisY);
+                    MaxAxisY -= deltaWidth / 580;
+
+                    if (deltaWidth < 0)
+                    {
+                        AxisY = AxisOffset + MaxAxisY * ratio;      
+                    }
+
+                    if (AxisY > MaxAxisY)
+                        AxisY = MaxAxisY;
+                    if (AxisY < MinAxisY)
+                        AxisY = MinAxisY;
                 }
 
                 Draw();
@@ -115,8 +127,8 @@ namespace ZPI_Paletyzator.View
 
                     if (AngleY < 0)
                         AngleY = 0;
-                    else if (AngleY > Math.PI / 4)
-                        AngleY = Math.PI / 4;
+                    else if (AngleY > Math.PI / 3)
+                        AngleY = Math.PI / 3;
 
                 }
 

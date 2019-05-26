@@ -92,6 +92,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\TextBoxBehavior.cs" />
     <Compile Include="View\MouseControlCamera.cs" />
     <Compile Include="View\PaletteGenerator.cs" />
     <Compile Include="View\ViewPortData.cs" />
