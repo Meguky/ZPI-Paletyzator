@@ -65,6 +65,7 @@ namespace ZPI_Paletyzator.View
             ModelSource.Children.Add(SceneObjectsGenerator.FlatPartGenerator());
             ModelSource.Children.Add(SceneObjectsGenerator.GroundPartsGenerator());
             ModelSource.Children.Add(SceneObjectsGenerator.Ground());
+            ModelSource.Children.Add(SceneObjectsGenerator.Sign());
 
             Transform3DGroup TranslationGroup = new Transform3DGroup();
             TranslationGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90)));
