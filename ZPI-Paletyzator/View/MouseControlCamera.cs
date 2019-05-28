@@ -34,21 +34,19 @@ namespace ZPI_Paletyzator.View
         private Action<PerspectiveCamera> CopyCamera;
 
         private double OldPanelWidth { get; set; }
-        double originalWidth = 0;
-        double originalHeight = 0;
+        private double originalWidth = 0;
+        private double originalHeight = 0;
 
-        public MouseControlCamera (Action<PerspectiveCamera> getMainCamera)
+        public MouseControlCamera (Action<PerspectiveCamera> changeMainCamera)
         {
             CameraR = 25;
             AxisY = 2;
             Camera = new PerspectiveCamera()
             {
-                Position = new Point3D(CameraR, 0, 0),
-                LookDirection = new Vector3D(-CameraR, 0, 0),
                 FieldOfView = 45
             };
-            CopyCamera = getMainCamera;
-            Draw();
+            CopyCamera = changeMainCamera;
+            SetCamera();
         }
 
 
@@ -82,7 +80,7 @@ namespace ZPI_Paletyzator.View
                 AxisY += AxisOffsetY;
 
 
-                Draw();
+                SetCamera();
             }
         }
 
@@ -120,19 +118,19 @@ namespace ZPI_Paletyzator.View
                     if (newCameraR >= 20 && newCameraR < 35)
                     {
                         CameraR = newCameraR;
-                        AxisY += (deltaY * Pix2AngleY) * 4;
-                        AxisOffsetY += (deltaY * Pix2AngleY) * 4;
+                        AxisY += deltaY * Pix2AngleY * 4;
+                        AxisOffsetY += deltaY * Pix2AngleY * 4;
                     }
                 }
 
                 if (MouseLeftButtonStatus || MouseRightButtonStatus)
                 {
-                    Draw();
+                    SetCamera();
                 }
             }
         }
 
-        private void Draw()
+        private void SetCamera()
         {
             CameraPositionX = ObserverX(AngleX, AngleY);
             CameraPositionY = ObserverY(AngleY);

@@ -28,5 +28,9 @@ namespace ZPI_Paletyzator.ViewModel
             }
             return false;
         }
+        protected void RaiseSetPropertyChangedEvent()
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+        }
     }
 }

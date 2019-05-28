@@ -83,7 +83,7 @@
                         </Grid.RowDefinitions>
 
                         <Label Content="Width:" Grid.Row="0" Grid.Column="0"/>
-                        <TextBox Text="{Binding Path=PalleteWidth, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="0" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
+                        <TextBox Text="{Binding Path=PaletteWidth, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="0" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
                             <TextBox.Style>
                                 <Style TargetType="TextBox">
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -96,7 +96,7 @@
                             </TextBox.Style>
                         </TextBox>
                         <Label Content="Length:" Grid.Row="1" Grid.Column="0" />
-                        <TextBox Text="{Binding Path=PalleteLength, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="1" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
+                        <TextBox Text="{Binding Path=PaletteLength, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="1" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
                             <TextBox.Style>
                                 <Style TargetType="TextBox">
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -109,7 +109,7 @@
                             </TextBox.Style>
                         </TextBox>
                         <Label Content="Max weight:" Grid.Row="2" Grid.Column="0" />
-                        <TextBox Text="{Binding Path=PalleteMaxWeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="2" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
+                        <TextBox Text="{Binding Path=PaletteMaxWeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="2" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
                             <TextBox.Style>
                                 <Style TargetType="TextBox">
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -122,22 +122,14 @@
                             </TextBox.Style>
                         </TextBox>
                         <Label Content="Max height:" Grid.Row="3" Grid.Column="0"/>
-                        <TextBox Text="{Binding Path=PalleteMaxHeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="3" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
+                        <TextBox Text="{Binding Path=PaletteMaxHeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="3" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
 
                     </Grid>
 
                 </StackPanel>
 
                 <Grid Grid.Row="3" Margin="0 10 5 10">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-
                     <Button Command="{Binding Path=CalculateCommand}" Content="Calculate" FontSize="14" FontWeight="Bold" Padding="5 2" Margin="5" Grid.Column="0" />
-                    <TextBox Text="{Binding Path=CalculateOutput}" Grid.Column="1" Margin="0 5" IsEnabled="False" />
-
                 </Grid>
 
             </Grid>
@@ -145,7 +137,7 @@
         </Grid>
 
 
-        <Viewport3D Grid.Column="1" MinHeight="480" MinWidth="500" Margin="3,3,0,0">
+        <Viewport3D Grid.Column="1" MinHeight="480" MinWidth="500" Margin="3">
 
             <Viewport3D.Camera>
                 <PerspectiveCamera Position = "{Binding ViewPortDataSource.MainCamera.Position}"
@@ -160,7 +152,7 @@
             </Viewport3D.Children>
         </Viewport3D>
 
-        <Canvas Grid.Column="1" MinHeight="480" MinWidth="500" Background="Transparent" Name="CanvasAboveViewport" Margin="3">
+        <Canvas Name="CanvasAboveViewport" Grid.Column="1" MinHeight="480" MinWidth="500" Background="Transparent" Margin="3">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Loaded" >
                     <i:InvokeCommandAction Command="{Binding ViewPortDataSource.InitPanelCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>

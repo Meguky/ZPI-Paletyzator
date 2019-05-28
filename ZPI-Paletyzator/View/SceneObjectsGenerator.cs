@@ -14,19 +14,70 @@ namespace ZPI_Paletyzator.View
 {
     class SceneObjectsGenerator
     {
-        public static GeometryModel3D FlatPartGenerator()
+        private double PackageHeight { get; set; }
+        private double PackageWidth { get; set; }
+        private double PackageLength { get; set; }
+        private double PaletteWidth { get; set; }
+        private double PaletteLength { get; set; }
+        private const double _visualPaletteLength = 4.5;
+        private double _visualPaleteWidth;
+        private double _visualMilimeter;
+
+        public SceneObjectsGenerator(double packageHeight = 0, double packageWidth = 0, double packageLength = 0, double paletteWidth = 0, double paletteLength = 0)
+        {
+            PackageHeight = packageHeight;
+            PackageWidth = packageWidth;
+            PackageLength = packageLength;
+            if (paletteWidth > paletteLength)
+            {
+                PaletteWidth = paletteLength;
+                PaletteLength = paletteWidth;
+            }
+            else
+            {
+                PaletteWidth = paletteWidth;
+                PaletteLength = paletteLength;
+            }
+
+            if (PaletteLength > 0)
+            {
+                _visualMilimeter = _visualPaletteLength / PaletteLength;
+                _visualPaleteWidth = PaletteWidth * _visualMilimeter;
+            }
+            else
+                _visualPaleteWidth = 3;
+        }
+
+
+
+        public Model3DGroup GetModel()
+        {
+            var mainModel = new Model3DGroup();
+            mainModel.Children.Add(FlatPartGenerator());
+            mainModel.Children.Add(GroundPartsGenerator());
+            mainModel.Children.Add(GroundGenerator());
+
+            if (PackageHeight > 0 && PackageWidth > 0 && PackageLength > 0 && PaletteWidth > 0 && PaletteLength > 0)
+            {
+                mainModel.Children.Add(PackagesGenerator());
+               // mainModel.Children.Add(SignGenerator());
+            }
+            return mainModel;
+        }
+
+        private GeometryModel3D FlatPartGenerator()
         {
             Point3DCollection meshPoints = new Point3DCollection
             {
-                new Point3D(-3, 0, -4.5),
-                new Point3D(-3, 0, 4.5),
-                new Point3D(3, 0, 4.5),
-                new Point3D(3, 0, -4.5),
+                new Point3D(- _visualPaleteWidth,  0, - _visualPaletteLength),
+                new Point3D(- _visualPaleteWidth,  0, _visualPaletteLength),
+                new Point3D(_visualPaleteWidth,    0, _visualPaletteLength),
+                new Point3D(_visualPaleteWidth,    0, - _visualPaletteLength),
 
-                new Point3D(-3, -0.4, -4.5),
-                new Point3D(-3, -0.4, 4.5),
-                new Point3D(3, -0.4, 4.5),
-                new Point3D(3, -0.4, -4.5)
+                new Point3D(- _visualPaleteWidth, -0.4, - _visualPaletteLength),
+                new Point3D(- _visualPaleteWidth, -0.4, _visualPaletteLength),
+                new Point3D(_visualPaleteWidth,   -0.4, _visualPaletteLength),
+                new Point3D(_visualPaleteWidth,   -0.4, - _visualPaletteLength)
             };
 
             Int32Collection triangleIndices = new Int32Collection
@@ -63,22 +114,22 @@ namespace ZPI_Paletyzator.View
 
 
 
-        public static Model3DGroup GroundPartsGenerator()
+        private Model3DGroup GroundPartsGenerator()
         {
 
             var groundGroup = new Model3DGroup();
 
             Point3DCollection meshPoints = new Point3DCollection
             {
-                new Point3D(-3, -0.4, -4.5),
-                new Point3D(-3, -0.4, 4.5),
-                new Point3D(-2, -0.4, 4.5),
-                new Point3D(-2, -0.4, -4.5),
+                new Point3D(-_visualPaleteWidth,     -0.4, -_visualPaletteLength),
+                new Point3D(-_visualPaleteWidth,     -0.4, _visualPaletteLength),
+                new Point3D(-_visualPaleteWidth + 1, -0.4, _visualPaletteLength),
+                new Point3D(-_visualPaleteWidth + 1, -0.4, -_visualPaletteLength),
 
-                new Point3D(-3, -0.8, -4.5),
-                new Point3D(-3, -0.8, 4.5),
-                new Point3D(-2, -0.8, 4.5),
-                new Point3D(-2, -0.8, -4.5)
+                new Point3D(-_visualPaleteWidth,     -0.8, -_visualPaletteLength),
+                new Point3D(-_visualPaleteWidth,     -0.8, _visualPaletteLength),
+                new Point3D(-_visualPaleteWidth + 1, -0.8, _visualPaletteLength),
+                new Point3D(-_visualPaleteWidth + 1, -0.8, -_visualPaletteLength)
             };
 
             Int32Collection triangleIndices = new Int32Collection
@@ -114,15 +165,15 @@ namespace ZPI_Paletyzator.View
             groundGroup.Children.Add(model.Clone());
 
 
-            groundGroup.Children[1].Transform = new TranslateTransform3D(2.5, 0, 0);
-            groundGroup.Children[2].Transform = new TranslateTransform3D(5, 0, 0);
+            groundGroup.Children[1].Transform = new TranslateTransform3D( _visualPaleteWidth - 0.5, 0, 0);
+            groundGroup.Children[2].Transform = new TranslateTransform3D(2 * _visualPaleteWidth - 1, 0, 0);
 
             return groundGroup;
         }
 
 
 
-        public static GeometryModel3D Ground()
+        private GeometryModel3D GroundGenerator()
         {
             Point3DCollection meshPoints = new Point3DCollection
             {
@@ -156,13 +207,70 @@ namespace ZPI_Paletyzator.View
         }
 
 
+        private Model3DGroup PackagesGenerator()
+        {
+            double packageHeight = PackageHeight * _visualMilimeter;
+            double packageWidth = PackageWidth * _visualMilimeter;
+            double packageLength = PackageLength * _visualMilimeter;
 
-        public static Model3DGroup Sign()
+
+            Point3DCollection meshPoints = new Point3DCollection
+            {
+                new Point3D(- packageWidth,  packageHeight, - packageLength),
+                new Point3D(- packageWidth,  packageHeight, packageLength),
+                new Point3D(packageWidth,    packageHeight, packageLength),
+                new Point3D(packageWidth,    packageHeight, - packageLength),
+
+                new Point3D(- packageWidth, -packageHeight, - packageLength),
+                new Point3D(- packageWidth, -packageHeight, packageLength),
+                new Point3D(packageWidth,   -packageHeight, packageLength),
+                new Point3D(packageWidth,   -packageHeight, - packageLength)
+            };
+
+            Int32Collection triangleIndices = new Int32Collection
+            {
+                0,1,2,
+                2,3,0,
+                0,4,5,
+                5,1,0,
+                1,5,6,
+                6,2,1,
+                2,6,3,
+                3,6,7,
+                3,7,4,
+                4,0,3,
+                4,7,6,
+                6,5,4
+            };
+
+            MeshGeometry3D palletFlatMesh = new MeshGeometry3D
+            {
+                Positions = meshPoints,
+                TriangleIndices = triangleIndices
+            };
+
+            GeometryModel3D model = new GeometryModel3D
+            {
+                Geometry = palletFlatMesh,            
+            };
+
+            model.Material = new DiffuseMaterial(new SolidColorBrush(Colors.Magenta));
+
+            var modelGroup = new Model3DGroup();
+            modelGroup.Children.Add(model);
+            modelGroup.Transform = new TranslateTransform3D(new Vector3D(0, packageHeight, 0));
+
+            return modelGroup;
+        }
+
+
+        private Model3DGroup SignGenerator()
         {
             string text = "Noooo siema...";
             TextBlock textBlock = new TextBlock(new Run(text))
             {
-                Foreground = Brushes.Pink,
+                Foreground = Brushes.White,
+                Background = Brushes.Black,
                 FontFamily = new FontFamily("Forte")
             };
 
@@ -205,9 +313,6 @@ namespace ZPI_Paletyzator.View
                 Geometry = textMesh,
                 Material = material
             };
-
-
-
 
             GeometryModel3D backTextModel = textModel.Clone();
             backTextModel.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 180));

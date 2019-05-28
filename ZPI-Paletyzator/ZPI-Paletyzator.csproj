@@ -96,7 +96,7 @@
     <Compile Include="View\MouseControlCamera.cs" />
     <Compile Include="View\SceneObjectsGenerator.cs" />
     <Compile Include="View\ViewPortData.cs" />
-    <Compile Include="View\ReleyCommand.cs" />
+    <Compile Include="Helper\ReleyCommand.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

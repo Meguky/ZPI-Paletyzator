@@ -14,21 +14,21 @@ namespace ZPI_Paletyzator.Model
         public double packageWeight;
         public bool seamFacingFront;
 
-        public double palleteWidth;
-        public double palleteLength;
-        public double palleteMaxHeight;
-        public double palleteMaxWeight;
+        public double paletteWidth;
+        public double paletteLength;
+        public double paletteMaxHeight;
+        public double paletteMaxWeight;
        
 
         public double Calculate()
         {
             if (seamFacingFront)
             {
-                return packageHeight + packageWidth + packageLength + packageWeight + palleteLength + palleteWidth + palleteMaxHeight + palleteMaxWeight;
+                return packageHeight + packageWidth + packageLength + packageWeight + paletteLength + paletteWidth + paletteMaxHeight + paletteMaxWeight;
             }
             else
             {
-                return (packageHeight + packageWidth + packageLength + packageWeight + palleteLength + palleteWidth + palleteMaxHeight + palleteMaxWeight) * -1;
+                return (packageHeight + packageWidth + packageLength + packageWeight + paletteLength + paletteWidth + paletteMaxHeight + paletteMaxWeight) * -1;
             }
             
         }

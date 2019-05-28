@@ -15,7 +15,7 @@ namespace ZPI_Paletyzator.View
 {
     sealed class ViewPortData
     {
-        public PerspectiveCamera MainCamera { get; set; }
+        public PerspectiveCamera MainCamera { get; private set; }
         public Model3DGroup LightModel { get; private set; }
         public Model3DGroup ModelSource { get; private set; }
         public ICommand InitPanelCommand => _initPanelCommand;
@@ -34,12 +34,24 @@ namespace ZPI_Paletyzator.View
         private readonly RelayCommand _rightButtonDownCommand;
         private readonly RelayCommand _rightButtonReleaseCommand;
 
-        public MouseControlCamera MouseControlCamera { get; set; }
+        private double PackageHeight { get; set; }
+        private double PackageWidth { get; set; }
+        private double PackageLength { get; set; }
+        private double PaletteWidth { get; set; }
+        private double PaletteLength { get; set; }
+
+        private MouseControlCamera MouseControlCamera { get; set; }
 
         private Action<PerspectiveCamera> CameraUpdate;
 
-        public ViewPortData()
+        public ViewPortData(double packageHeight = 0, double packageWidth = 0, double packageLength = 0, double paletteWidth = 0, double paletteLength = 0)
         {
+            PackageHeight = packageHeight;
+            PackageWidth = packageWidth;
+            PackageLength = packageLength;
+            PaletteWidth = paletteWidth;
+            PaletteLength = paletteLength;
+
             MainCamera = new PerspectiveCamera();
             CameraUpdate = (PerspectiveCamera Camera) =>
             {
@@ -49,6 +61,7 @@ namespace ZPI_Paletyzator.View
             };
 
             MouseControlCamera = new MouseControlCamera(CameraUpdate);
+
             _initPanelCommand = new RelayCommand(MouseControlCamera.InitPanel, obj => true);
             _getPanelSizeCommand = new RelayCommand(MouseControlCamera.GetPanelSize, obj => true);
             _moveCommand = new RelayCommand(MouseControlCamera.MouseMove, obj => true);
@@ -62,10 +75,26 @@ namespace ZPI_Paletyzator.View
             LightModel.Children.Add(myAmbientLight);
 
             ModelSource = new Model3DGroup();
-            ModelSource.Children.Add(SceneObjectsGenerator.FlatPartGenerator());
-            ModelSource.Children.Add(SceneObjectsGenerator.GroundPartsGenerator());
-            ModelSource.Children.Add(SceneObjectsGenerator.Ground());
-            ModelSource.Children.Add(SceneObjectsGenerator.Sign());
+            SceneObjectsGenerator sceneObjecGenerator = new SceneObjectsGenerator(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength);
+            ModelSource.Children.Add(sceneObjecGenerator.GetModel());
+
+            Transform3DGroup TranslationGroup = new Transform3DGroup();
+            TranslationGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90)));
+            TranslationGroup.Children.Add(new TranslateTransform3D(new Vector3D(0, -4, 0)));
+            ModelSource.Transform = TranslationGroup;
+        }
+
+        public void AddSceneObjects (double packageHeight, double packageWidth, double packageLength, double paletteWidth, double paletteLength)
+        {
+            PackageHeight = packageHeight;
+            PackageWidth = packageWidth;
+            PackageLength = packageLength;
+            PaletteWidth = paletteWidth;
+            PaletteLength = paletteLength;
+
+            ModelSource = new Model3DGroup();
+            SceneObjectsGenerator sceneObjecGenerator = new SceneObjectsGenerator(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength);
+            ModelSource.Children.Add(sceneObjecGenerator.GetModel());
 
             Transform3DGroup TranslationGroup = new Transform3DGroup();
             TranslationGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90)));
