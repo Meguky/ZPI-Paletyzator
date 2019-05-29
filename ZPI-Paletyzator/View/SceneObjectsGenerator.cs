@@ -25,9 +25,6 @@ namespace ZPI_Paletyzator.View
 
         public SceneObjectsGenerator(double packageHeight = 0, double packageWidth = 0, double packageLength = 0, double paletteWidth = 0, double paletteLength = 0)
         {
-            PackageHeight = packageHeight;
-            PackageWidth = packageWidth;
-            PackageLength = packageLength;
             if (paletteWidth > paletteLength)
             {
                 PaletteWidth = paletteLength;
@@ -43,6 +40,9 @@ namespace ZPI_Paletyzator.View
             {
                 _visualMilimeter = _visualPaletteLength / PaletteLength;
                 _visualPaleteWidth = PaletteWidth * _visualMilimeter;
+                PackageHeight = packageHeight * _visualMilimeter;
+                PackageWidth = packageWidth * _visualMilimeter;
+                PackageLength = packageLength * _visualMilimeter;
             }
             else
                 _visualPaleteWidth = 3;
@@ -60,10 +60,13 @@ namespace ZPI_Paletyzator.View
             if (PackageHeight > 0 && PackageWidth > 0 && PackageLength > 0 && PaletteWidth > 0 && PaletteLength > 0)
             {
                 mainModel.Children.Add(PackagesGenerator());
-               // mainModel.Children.Add(SignGenerator());
+                //mainModel.Children.Add(SignGenerator());
             }
             return mainModel;
         }
+
+
+
 
         private GeometryModel3D FlatPartGenerator()
         {
@@ -121,15 +124,15 @@ namespace ZPI_Paletyzator.View
 
             Point3DCollection meshPoints = new Point3DCollection
             {
-                new Point3D(-_visualPaleteWidth,     -0.4, -_visualPaletteLength),
+                new Point3D(-_visualPaleteWidth,     -0.4, - _visualPaletteLength),
                 new Point3D(-_visualPaleteWidth,     -0.4, _visualPaletteLength),
                 new Point3D(-_visualPaleteWidth + 1, -0.4, _visualPaletteLength),
-                new Point3D(-_visualPaleteWidth + 1, -0.4, -_visualPaletteLength),
+                new Point3D(-_visualPaleteWidth + 1, -0.4, - _visualPaletteLength),
 
-                new Point3D(-_visualPaleteWidth,     -0.8, -_visualPaletteLength),
+                new Point3D(-_visualPaleteWidth,     -0.8, - _visualPaletteLength),
                 new Point3D(-_visualPaleteWidth,     -0.8, _visualPaletteLength),
                 new Point3D(-_visualPaleteWidth + 1, -0.8, _visualPaletteLength),
-                new Point3D(-_visualPaleteWidth + 1, -0.8, -_visualPaletteLength)
+                new Point3D(-_visualPaleteWidth + 1, -0.8, - _visualPaletteLength)
             };
 
             Int32Collection triangleIndices = new Int32Collection
@@ -209,22 +212,17 @@ namespace ZPI_Paletyzator.View
 
         private Model3DGroup PackagesGenerator()
         {
-            double packageHeight = PackageHeight * _visualMilimeter;
-            double packageWidth = PackageWidth * _visualMilimeter;
-            double packageLength = PackageLength * _visualMilimeter;
-
-
             Point3DCollection meshPoints = new Point3DCollection
             {
-                new Point3D(- packageWidth,  packageHeight, - packageLength),
-                new Point3D(- packageWidth,  packageHeight, packageLength),
-                new Point3D(packageWidth,    packageHeight, packageLength),
-                new Point3D(packageWidth,    packageHeight, - packageLength),
+                new Point3D(- PackageWidth,  PackageHeight, - PackageLength),
+                new Point3D(- PackageWidth,  PackageHeight, PackageLength),
+                new Point3D(PackageWidth,    PackageHeight, PackageLength),
+                new Point3D(PackageWidth,    PackageHeight, - PackageLength),
 
-                new Point3D(- packageWidth, -packageHeight, - packageLength),
-                new Point3D(- packageWidth, -packageHeight, packageLength),
-                new Point3D(packageWidth,   -packageHeight, packageLength),
-                new Point3D(packageWidth,   -packageHeight, - packageLength)
+                new Point3D(- PackageWidth, -PackageHeight, - PackageLength),
+                new Point3D(- PackageWidth, -PackageHeight, PackageLength),
+                new Point3D(PackageWidth,   -PackageHeight, PackageLength),
+                new Point3D(PackageWidth,   -PackageHeight, - PackageLength)
             };
 
             Int32Collection triangleIndices = new Int32Collection
@@ -258,7 +256,7 @@ namespace ZPI_Paletyzator.View
 
             var modelGroup = new Model3DGroup();
             modelGroup.Children.Add(model);
-            modelGroup.Transform = new TranslateTransform3D(new Vector3D(0, packageHeight, 0));
+            modelGroup.Transform = new TranslateTransform3D(new Vector3D(0, PackageHeight, 0));
 
             return modelGroup;
         }
@@ -281,24 +279,26 @@ namespace ZPI_Paletyzator.View
 
             Point3DCollection textPointCollection = new Point3DCollection
             {
-                new Point3D(-10, 10, 0),
-                new Point3D(-10, 5, 0),
-                new Point3D(10, 5, 0),
-                new Point3D(10, 10, 0)
+                new Point3D(0.01, PackageHeight, -PackageLength),
+                new Point3D(0.01, 0,             -PackageLength),
+                new Point3D(0.01, 0,              PackageLength),
+                new Point3D(0.01, PackageHeight,  PackageLength)
             };
 
             Int32Collection triangleIndices = new Int32Collection
             {
-                0,1,2,
-                2,3,0
+                0,3,2,
+                2,1,0
+                //0,1,2,
+                //2,3,0
             };
 
             PointCollection textureCoordinates = new PointCollection
             {
-                new Point(0, 0),
-                new Point(0, 1),
+                new Point(1, 0),
                 new Point(1, 1),
-                new Point(1, 0)
+                new Point(0, 1),
+                new Point(0, 0)
             };
 
             MeshGeometry3D textMesh = new MeshGeometry3D
@@ -314,13 +314,14 @@ namespace ZPI_Paletyzator.View
                 Material = material
             };
 
-            GeometryModel3D backTextModel = textModel.Clone();
-            backTextModel.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 180));
+            //GeometryModel3D backTextModel = textModel.Clone();
+            //backTextModel.Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 180));
 
             var group = new Model3DGroup();
             group.Children.Add(textModel);
-            group.Children.Add(backTextModel);
-            
+            //group.Children.Add(backTextModel);
+
+            group.Transform = new TranslateTransform3D(new Vector3D(PackageWidth, 0, 0));
 
             return group;
         }

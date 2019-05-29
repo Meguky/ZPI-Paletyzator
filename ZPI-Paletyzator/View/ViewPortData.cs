@@ -44,6 +44,8 @@ namespace ZPI_Paletyzator.View
 
         private Action<PerspectiveCamera> CameraUpdate;
 
+
+
         public ViewPortData(double packageHeight = 0, double packageWidth = 0, double packageLength = 0, double paletteWidth = 0, double paletteLength = 0)
         {
             PackageHeight = packageHeight;
@@ -71,8 +73,7 @@ namespace ZPI_Paletyzator.View
             _rightButtonReleaseCommand = new RelayCommand(MouseControlCamera.MouseRightButtonRelease, obj => true);
 
             LightModel = new Model3DGroup();
-            var myAmbientLight = new AmbientLight(Colors.White);
-            LightModel.Children.Add(myAmbientLight);
+            LightModel.Children.Add(new AmbientLight(Colors.White));
 
             ModelSource = new Model3DGroup();
             SceneObjectsGenerator sceneObjecGenerator = new SceneObjectsGenerator(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength);
@@ -83,6 +84,8 @@ namespace ZPI_Paletyzator.View
             TranslationGroup.Children.Add(new TranslateTransform3D(new Vector3D(0, -4, 0)));
             ModelSource.Transform = TranslationGroup;
         }
+
+
 
         public void AddSceneObjects (double packageHeight, double packageWidth, double packageLength, double paletteWidth, double paletteLength)
         {
