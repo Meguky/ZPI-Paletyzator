@@ -19,7 +19,10 @@ namespace ZPI_Paletyzator.View
 
         public ColourGenerator(int objectAmount)
         {
-            delta = 7 * 255 / objectAmount;
+            if (objectAmount > 0)
+            {
+                delta = 7 * 255 / objectAmount;
+            }
         }
 
 

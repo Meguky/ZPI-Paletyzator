@@ -92,8 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\MapNode.cs" />
     <Compile Include="Helper\TextBoxBehavior.cs" />
     <Compile Include="View\ColourGenerator.cs" />
+    <Compile Include="View\FloorMap.cs" />
     <Compile Include="View\MouseControlCamera.cs" />
     <Compile Include="View\SceneObjectsGenerator.cs" />
     <Compile Include="View\ViewPortData.cs" />
