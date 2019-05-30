@@ -210,18 +210,14 @@ namespace ZPI_Paletyzator.View
                     if (k == 4)
                         signsAll.Children[k] = SignUp(whichLevel * floor.Children.Count + i + 1);
                     if (k == 3)
-                        signsAll.Children[k] = SignFront(whichLevel * floor.Children.Count + i + 1, turned);
+                        signsAll.Children[k] = SignFront(whichLevel * floor.Children.Count + i + 1);
                     if (k == 2)
-                        signsAll.Children[k] = SignBack(whichLevel * floor.Children.Count + i + 1, turned);
+                        signsAll.Children[k] = SignBack(whichLevel * floor.Children.Count + i + 1);
                     if (k == 1)
-                        signsAll.Children[k] = SignRight(whichLevel * floor.Children.Count + i + 1, turned);
+                        signsAll.Children[k] = SignRight(whichLevel * floor.Children.Count + i + 1);
                     if (k == 0)
-                        signsAll.Children[k] = SignLeft(whichLevel * floor.Children.Count + i + 1, turned);
-
-
+                        signsAll.Children[k] = SignLeft(whichLevel * floor.Children.Count + i + 1);
                 }
-                //modelGroup.Children.Add(SignGenerator(15, false));
-                //modelGroup.Children[1].Transform = modelGroup.Children[0].Transform;
                 floor.Children[i] = modelGroup;
             }
 
@@ -280,7 +276,7 @@ namespace ZPI_Paletyzator.View
 
             double minDimension = PackageWidth < PackageLength ? PackageWidth : PackageLength;
 
-            minDimension /= 2;
+            minDimension /= 1.5;
 
 
             Point3DCollection textPointCollection = new Point3DCollection
@@ -349,7 +345,7 @@ namespace ZPI_Paletyzator.View
 
             double minDimension = PackageWidth < PackageLength ? PackageWidth : PackageLength;
 
-            minDimension /= 2;
+            minDimension /= 1.5;
 
 
             Point3DCollection textPointCollection = new Point3DCollection
@@ -394,7 +390,7 @@ namespace ZPI_Paletyzator.View
 
 
 
-        private GeometryModel3D SignFront(int number, bool turned)
+        private GeometryModel3D SignFront(int number)
         {
             string text = number.ToString();
             TextBlock textBlock = new TextBlock(new Run(text))
@@ -417,15 +413,8 @@ namespace ZPI_Paletyzator.View
             };
 
             double minDimension = 0;
-            if (turned == false)
-            {
-                minDimension = PackageWidth < PackageHeight ? PackageWidth : PackageHeight;
-            }
-            else
-            {
-                minDimension = PackageLength < PackageHeight ? PackageLength : PackageHeight;
-            }
-            minDimension /= 2;
+            minDimension = PackageWidth < PackageHeight ? PackageWidth : PackageHeight;
+            minDimension /= 1.5;
 
 
             Point3DCollection textPointCollection = new Point3DCollection
@@ -471,7 +460,7 @@ namespace ZPI_Paletyzator.View
 
 
 
-        private GeometryModel3D SignBack(int number, bool turned)
+        private GeometryModel3D SignBack(int number)
         {
             string text = number.ToString();
             TextBlock textBlock = new TextBlock(new Run(text))
@@ -494,15 +483,8 @@ namespace ZPI_Paletyzator.View
             };
 
             double minDimension = 0;
-            if (turned == false)
-            {
-                minDimension = PackageWidth < PackageHeight ? PackageWidth : PackageHeight;
-            }
-            else
-            {
-                minDimension = PackageLength < PackageHeight ? PackageLength : PackageHeight;
-            }
-            minDimension /= 2;
+            minDimension = PackageWidth < PackageHeight ? PackageWidth : PackageHeight;
+            minDimension /= 1.5;
 
 
             Point3DCollection textPointCollection = new Point3DCollection
@@ -547,7 +529,7 @@ namespace ZPI_Paletyzator.View
 
 
 
-        private GeometryModel3D SignRight(int number, bool turned)
+        private GeometryModel3D SignRight(int number)
         {
             string text = number.ToString();
             TextBlock textBlock = new TextBlock(new Run(text))
@@ -570,15 +552,8 @@ namespace ZPI_Paletyzator.View
             };
 
             double minDimension = 0;
-            if (turned == false)
-            {
-                minDimension = PackageLength < PackageHeight ? PackageLength : PackageHeight;
-            }
-            else
-            {
-                minDimension = PackageWidth < PackageHeight ? PackageWidth : PackageHeight;
-            }
-            minDimension /= 2;
+            minDimension = PackageLength < PackageHeight ? PackageLength : PackageHeight;
+            minDimension /= 1.5;
 
 
             Point3DCollection textPointCollection = new Point3DCollection
@@ -623,7 +598,7 @@ namespace ZPI_Paletyzator.View
 
 
 
-        private GeometryModel3D SignLeft(int number, bool turned)
+        private GeometryModel3D SignLeft(int number)
         {
             string text = number.ToString();
             TextBlock textBlock = new TextBlock(new Run(text))
@@ -646,15 +621,8 @@ namespace ZPI_Paletyzator.View
             };
 
             double minDimension = 0;
-            if (turned == false)
-            {
-                minDimension = PackageLength < PackageHeight ? PackageLength : PackageHeight;
-            }
-            else
-            {
-                minDimension = PackageWidth < PackageHeight ? PackageWidth : PackageHeight;
-            }
-            minDimension /= 2;
+            minDimension = PackageLength < PackageHeight ? PackageLength : PackageHeight;
+            minDimension /= 1.5;
 
 
             Point3DCollection textPointCollection = new Point3DCollection
