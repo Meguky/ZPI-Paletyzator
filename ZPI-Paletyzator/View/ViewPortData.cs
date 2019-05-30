@@ -76,8 +76,8 @@ namespace ZPI_Paletyzator.View
             LightModel.Children.Add(new AmbientLight(Colors.White));
 
             ModelSource = new Model3DGroup();
-            SceneObjectsGenerator sceneObjecGenerator = new SceneObjectsGenerator(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength);
-            ModelSource.Children.Add(sceneObjecGenerator.GetModel());
+            PaletteBase packagesGenerator = new PaletteBase(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength);
+            ModelSource.Children.Add(packagesGenerator.GetModel());
 
             Transform3DGroup TranslationGroup = new Transform3DGroup();
             TranslationGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90)));
@@ -87,7 +87,7 @@ namespace ZPI_Paletyzator.View
 
 
 
-        public void AddSceneObjects (double packageHeight, double packageWidth, double packageLength, double paletteWidth, double paletteLength, int levels = 1)
+        public void AddSceneObjects(double packageHeight, double packageWidth, double packageLength, double paletteWidth, double paletteLength, int levels = 1)
         {
             PackageHeight = packageHeight;
             PackageWidth = packageWidth;
@@ -96,8 +96,10 @@ namespace ZPI_Paletyzator.View
             PaletteLength = paletteLength;
 
             ModelSource = new Model3DGroup();
-            SceneObjectsGenerator sceneObjecGenerator = new SceneObjectsGenerator(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength, levels);
-            ModelSource.Children.Add(sceneObjecGenerator.GetModel());
+            PaletteBase paletteBase = new PaletteBase(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength);
+            ModelSource.Children.Add(paletteBase.GetModel());
+            PackagesGenerator packagesGenerator = new PackagesGenerator(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength, levels);
+            ModelSource.Children.Add(packagesGenerator.GetModel());
 
             Transform3DGroup TranslationGroup = new Transform3DGroup();
             TranslationGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90)));

@@ -137,7 +137,7 @@
         </Grid>
 
 
-        <Viewport3D Grid.Column="1" MinHeight="480" MinWidth="500" Margin="3">
+        <Viewport3D Grid.Column="1" MinHeight="480" MinWidth="500" Margin="3" IsHitTestVisible="False">
 
             <Viewport3D.Camera>
                 <PerspectiveCamera Position = "{Binding ViewPortDataSource.MainCamera.Position}"
