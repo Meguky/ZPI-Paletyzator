@@ -18,14 +18,18 @@ namespace ZPI_Paletyzator.View
 
         //public int ObjectsPerFloor { get; private set; }
 
-        public FloorMap (double packageWidth, double packageLength, double paletteWidth, double paletteLength)
+        public FloorMap (double packageWidth, double packageLength, double paletteWidth, double paletteLength, bool turned = false)
         {
             Map = new List<MapNode>();
             PackageWidth = packageWidth;
             PackageLength = packageLength;
             PaletteWidth = paletteWidth;
             PaletteLength = paletteLength;
-            GenerateMap();
+
+            if (turned == false)
+                GenerateMap();
+            else
+                GenerateTurnedMap();
         }
 
         private void GenerateMap ()
@@ -37,13 +41,14 @@ namespace ZPI_Paletyzator.View
             //};
             //Map.Add(node);
 
-            double nowX;
-            nowX = -PaletteWidth;
+            double nowX = -PaletteWidth;
 
-            while (nowX + 2 * PackageWidth <= PaletteWidth)
+            int columns = 0;
+            while (nowX + 2 * PackageWidth <= PaletteWidth + 0.01 * columns)
             {
+                int rows = 0;
                 double nowY = -PaletteLength;
-                while (nowY + 2 * PackageLength <= PaletteLength)
+                while (nowY + 2 * PackageLength <= PaletteLength + 0.01 * rows)
                 {
                     MapNode node = new MapNode()
                     {
@@ -53,10 +58,41 @@ namespace ZPI_Paletyzator.View
                     Map.Add(node);
                     nowY += 2 * PackageLength;
                     nowY += 0.01;
-                    //ObjectsPerFloor++;
+                    rows++;
                 }
                 nowX += 2 * PackageWidth;
                 nowX += 0.01;
+                columns++;
+            }
+        }
+
+
+
+        private void GenerateTurnedMap ()
+        {
+            double nowX = -PaletteWidth;
+
+            int columns = 0;
+            while (nowX + 2 * PackageLength <= PaletteWidth + 0.01 * columns)
+            {
+                int rows = 0;
+                double nowY = -PaletteLength;
+                while (nowY + 2 * PackageWidth <= PaletteLength + 0.01 * rows)
+                {
+                    MapNode node = new MapNode()
+                    {
+                        PosX = nowX,
+                        PosY = nowY,
+                        IsTurned = true,
+                    };
+                    Map.Add(node);
+                    nowY += 2 * PackageWidth;
+                    nowY += 0.01;
+                    rows++;
+                }
+                nowX += 2 * PackageLength;
+                nowX += 0.01;
+                columns++;
             }
         }
     }

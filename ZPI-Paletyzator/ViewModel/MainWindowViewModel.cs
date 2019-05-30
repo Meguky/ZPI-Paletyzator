@@ -51,7 +51,7 @@ namespace ZPI_Paletyzator.ViewModel
 
         private void Calculate(object commandParameter)
         {
-            ViewPortDataSource.AddSceneObjects(PackageHeight, PackageWidth, PackageLength, PaletteWidth, PaletteLength);
+            ViewPortDataSource.AddSceneObjects(PackageHeight, PackageWidth, PackageLength, PaletteWidth, PaletteLength, 7);
             RaiseSetPropertyChangedEvent();
         }
 

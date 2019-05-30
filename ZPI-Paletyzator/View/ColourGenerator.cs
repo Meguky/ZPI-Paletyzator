@@ -13,15 +13,20 @@ namespace ZPI_Paletyzator.View
         private double G;
         private double B;
 
-        private byte state;
-
+        private int state;
         private double delta;
+        private bool goUp = true;
 
         public ColourGenerator(int objectAmount)
         {
-            if (objectAmount > 0)
+            if (objectAmount > 2)
             {
-                delta = 7 * 255 / objectAmount;
+                state = -1;
+                delta = 7.0 * 255 / (objectAmount - 1);
+            }
+            else
+            {
+                delta = 0;
             }
         }
 
@@ -30,37 +35,80 @@ namespace ZPI_Paletyzator.View
         {
             double toAdd = delta;
 
-            while (toAdd > 0)
+            if (delta == 0)
             {
                 switch (state)
                 {
                     case 0:
-                        Increase(ref R, ref toAdd);
-                        break;
+                        state++;
+                        return Color.FromRgb(0, 0, 0);
                     case 1:
-                        Increase(ref G, ref toAdd);
-                        break;
-                    case 2:
-                        Decrese(ref R, ref toAdd);
-                        break;
-                    case 3:
-                        Increase(ref B, ref toAdd);
-                        break;
-                    case 4:
-                        Decrese(ref G, ref toAdd);
-                        break;
-                    case 5:
-                        Increase(ref R, ref toAdd);
-                        break;
-                    case 6:
-                        Increase(ref G, ref toAdd);
-                        break;
-                    default:
+                        state--;
                         return Color.FromRgb(255, 255, 255);
                 }
             }
+            else
+            {
+                while (toAdd > 0)
+                {
+                    switch (state)
+                    {
+                        case -1:
+                            goUp = true;
+                            state++;
+                            return Color.FromRgb(0, 0, 0);
+                        case 0:
+                            if (goUp)
+                                Increase(ref R, ref toAdd);
+                            else
+                                Decrese(ref G, ref toAdd);
+                            break;
+                        case 1:
+                            if (goUp)
+                                Increase(ref G, ref toAdd);
+                            else
+                                Decrese(ref R, ref toAdd);
+                            break;
+                        case 2:
+                            if (goUp)
+                                Decrese(ref R, ref toAdd);
+                            else
+                                Increase(ref G, ref toAdd);
+                            break;
+                        case 3:
+                            if (goUp)
+                                Increase(ref B, ref toAdd);
+                            else
+                                Decrese(ref B, ref toAdd);
+                            break;
+                        case 4:
+                            if (goUp)
+                                Decrese(ref G, ref toAdd);
+                            else
+                                Increase(ref R, ref toAdd);
+                            break;
+                        case 5:
+                            if (goUp)
+                                Increase(ref R, ref toAdd);
+                            else
+                                Decrese(ref G, ref toAdd);
+                            break;
+                        case 6:
+                            if (goUp)
+                                Increase(ref G, ref toAdd);
+                            else
+                                Decrese(ref R, ref toAdd);
+                            break;
+                        case 7:
+                            goUp = false;
+                            state--;
+                            return Color.FromRgb(255, 255, 255);
 
-
+                        default:
+                            return Color.FromRgb(0, 0, 0);
+                    }
+                }
+            }
             return Color.FromRgb((byte)R, (byte)G, (byte)B);
         }
 
@@ -69,11 +117,14 @@ namespace ZPI_Paletyzator.View
         private void Increase (ref double rgb, ref double toAdd)
         {
             double filler = 255 - rgb;
-            if (toAdd > filler)
+            if (toAdd >= filler)
             {
                 rgb = 255;
                 toAdd -= filler;
-                state++;
+                if (goUp)
+                    state++;
+                else
+                    state--;
             }
             else
             {
@@ -86,11 +137,14 @@ namespace ZPI_Paletyzator.View
 
         private void Decrese (ref double rgb, ref double toAdd)
         {
-            if (toAdd > rgb)
+            if (toAdd >= rgb)
             {
                 toAdd -= rgb;
                 rgb = 0;
-                state++;
+                if (goUp)
+                    state++;
+                else
+                    state--;
             }
             else
             {
@@ -104,6 +158,7 @@ namespace ZPI_Paletyzator.View
         public void Reset ()
         {
             R = G = B = delta = state = 0;
+            goUp = true;
         }
     }
 }

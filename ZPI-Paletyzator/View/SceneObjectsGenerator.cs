@@ -63,8 +63,31 @@ namespace ZPI_Paletyzator.View
             if (PackageHeight > 0 && PackageWidth > 0 && PackageLength > 0 && PaletteWidth > 0 && PaletteLength > 0)
             {
                 FloorMap floorMap = new FloorMap(PackageWidth, PackageLength, PaletteWidth, PaletteLength);
+                FloorMap floorTurnedMap = new FloorMap(PackageWidth, PackageLength, PaletteWidth, PaletteLength, true);
                 var packageFloors = new Model3DGroup();
-                packageFloors.Children.Add(FloorGenerator(floorMap, PackageGenerator()));
+
+                for (int i = 0; i < Levels; i++)
+                {
+                    packageFloors.Children.Add(FloorGenerator(floorMap, PackageGenerator()));
+                    TranslateTransform3D translate = new TranslateTransform3D();
+                    translate = (TranslateTransform3D)packageFloors.Children[i].Transform;
+                    packageFloors.Children[i].Transform = new TranslateTransform3D(new Vector3D(translate.OffsetX, translate.OffsetY + PackageHeight * 2 * i + i * 0.01, translate.OffsetZ));
+
+                    if (++i >= Levels)
+                        break;
+                    packageFloors.Children.Add(FloorGenerator(floorTurnedMap, PackageGenerator()));
+                    TranslateTransform3D turnedFloorTranslate = new TranslateTransform3D();
+                    turnedFloorTranslate = (TranslateTransform3D)packageFloors.Children[i].Transform;
+                    packageFloors.Children[i].Transform = new TranslateTransform3D(new Vector3D(turnedFloorTranslate.OffsetX, turnedFloorTranslate.OffsetY + PackageHeight * 2 * i + i * 0.01, turnedFloorTranslate.OffsetZ));
+                }
+
+                //var packageFloors = new Model3DGroup();
+                //packageFloors.Children.Add(FloorGenerator(floorMap, PackageGenerator()));
+                //packageFloors.Children.Add(FloorGenerator(floorTurnedMap, PackageGenerator()));
+                //TranslateTransform3D translate = new TranslateTransform3D();
+                //translate = (TranslateTransform3D)packageFloors.Children[1].Transform;
+                //packageFloors.Children[1].Transform = new TranslateTransform3D(new Vector3D(translate.OffsetX, translate.OffsetY + PackageHeight * 2 + 0.01, translate.OffsetZ));
+
 
 
                 var coloredFloors = new Model3DGroup();
@@ -276,13 +299,13 @@ namespace ZPI_Paletyzator.View
             {
                 GeometryModel3D geometryModel = new GeometryModel3D();
                 geometryModel = model.Clone();
-                TranslateTransform3D translation = new TranslateTransform3D(new Vector3D(mapNode.PosX, PackageHeight, - mapNode.PosY));
                 RotateTransform3D rotation = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90));
                 Transform3DGroup transformation = new Transform3DGroup();
 
                 if (mapNode.IsTurned)
                     transformation.Children.Add(rotation);
 
+                TranslateTransform3D translation = new TranslateTransform3D(new Vector3D(mapNode.PosX, PackageHeight, -mapNode.PosY));
                 transformation.Children.Add(translation);
                 geometryModel.Transform = transformation;
 
@@ -298,7 +321,7 @@ namespace ZPI_Paletyzator.View
                 GeometryModel3D geometryModel = new GeometryModel3D();
                 geometryModel = (GeometryModel3D) floor.Children[i];
 
-                Transform3DGroup translationGroup = (Transform3DGroup)geometryModel.Transform;
+                Transform3DGroup translationGroup = (Transform3DGroup) geometryModel.Transform;
                 TranslateTransform3D translation = (TranslateTransform3D) translationGroup.Children[translationGroup.Children.Count - 1];
 
                 double minCandidateX, maxCandidateX, minCandidateZ, maxCandidateZ;
@@ -343,15 +366,7 @@ namespace ZPI_Paletyzator.View
 
         private Model3DGroup ThrowUpRainbow (Model3DGroup sadFloors)
         {
-            int numberOfPackages = 0;
-            for (int i = 0; i < sadFloors.Children.Count; i++)
-            {
-                Model3DGroup packages = new Model3DGroup();
-                packages = (Model3DGroup) sadFloors.Children[i];
-                numberOfPackages += packages.Children.Count;
-            }
-
-            ColourGenerator colourGenerator = new ColourGenerator(numberOfPackages);
+            ColourGenerator colourGenerator = new ColourGenerator( ((Model3DGroup)sadFloors.Children[0]).Children.Count );
 
             for (int i = 0; i < sadFloors.Children.Count; i++)
             {
@@ -366,15 +381,9 @@ namespace ZPI_Paletyzator.View
                     DiffuseMaterial material = new DiffuseMaterial();
                     material = (DiffuseMaterial)model.Material;
                     material.Brush = new SolidColorBrush(colourGenerator.GetColor());
-                    model.Material = material;
-                    onePackage.Children[0] = model;
-                    packages.Children[j] = onePackage;
                 }
-                sadFloors.Children[i] = packages;
             }
-
-
-
+            
             return sadFloors;
         }
 

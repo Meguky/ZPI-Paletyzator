@@ -87,7 +87,7 @@ namespace ZPI_Paletyzator.View
 
 
 
-        public void AddSceneObjects (double packageHeight, double packageWidth, double packageLength, double paletteWidth, double paletteLength)
+        public void AddSceneObjects (double packageHeight, double packageWidth, double packageLength, double paletteWidth, double paletteLength, int levels = 1)
         {
             PackageHeight = packageHeight;
             PackageWidth = packageWidth;
@@ -96,7 +96,7 @@ namespace ZPI_Paletyzator.View
             PaletteLength = paletteLength;
 
             ModelSource = new Model3DGroup();
-            SceneObjectsGenerator sceneObjecGenerator = new SceneObjectsGenerator(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength);
+            SceneObjectsGenerator sceneObjecGenerator = new SceneObjectsGenerator(packageHeight, packageWidth, packageLength, paletteWidth, paletteLength, levels);
             ModelSource.Children.Add(sceneObjecGenerator.GetModel());
 
             Transform3DGroup TranslationGroup = new Transform3DGroup();
