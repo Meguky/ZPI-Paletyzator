@@ -33,6 +33,7 @@ namespace ZPI_Paletyzator.ViewModel
         private double _calculateOutput;
         private bool UsingEuroPalette { get; set; }
 
+
         public ViewPortData ViewPortDataSource { get; set; }
 
         public ICommand CalculateCommand => _calculateCommand;
@@ -41,18 +42,19 @@ namespace ZPI_Paletyzator.ViewModel
 
         public MainWindowViewModel()
         {
+            ViewPortDataSource = new ViewPortData();
             _calculateCommand = new DelegateCommand(Calculate, CanCalculate);
             _seamFacingFrontCommand = new DelegateCommand(ChangeSeamPosition);
             _euroPaletteCommand = new DelegateCommand(EuroPalette);
             _seamFacingFront = false;
-            ViewPortDataSource = new ViewPortData();
         }
        
 
         private void Calculate(object commandParameter)
         {
             ViewPortDataSource.AddSceneObjects(PackageHeight, PackageWidth, PackageLength, PaletteWidth, PaletteLength, 7);
-            RaiseSetPropertyChangedEvent();
+
+            SetPropertyChangedDelegate.Invoke();
         }
 
 
@@ -63,6 +65,7 @@ namespace ZPI_Paletyzator.ViewModel
             else
                 return false;
         }
+
 
         private void ChangeSeamPosition(object commandParameter)
         {

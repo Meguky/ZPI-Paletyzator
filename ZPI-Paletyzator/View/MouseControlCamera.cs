@@ -26,8 +26,8 @@ namespace ZPI_Paletyzator.View
         private double CameraPositionY { get; set; }
         private double CameraPositionZ { get; set; }
         private double CameraR { get; set; }
-        private double AxisY { get; set; }
-        private double AxisOffsetY { get; set; }
+        //private double AxisY { get; set; }
+        //private double AxisOffsetY { get; set; }
         
         private PerspectiveCamera Camera { get; set; }
 
@@ -37,10 +37,12 @@ namespace ZPI_Paletyzator.View
         private double originalWidth = 0;
         private double originalHeight = 0;
 
+        
+
         public MouseControlCamera (Action<PerspectiveCamera> changeMainCamera)
         {
             CameraR = 25;
-            AxisY = 2;
+            //AxisY = 2;
             Camera = new PerspectiveCamera()
             {
                 FieldOfView = 45
@@ -48,6 +50,7 @@ namespace ZPI_Paletyzator.View
             CopyCamera = changeMainCamera;
             SetCamera();
         }
+
 
 
         public void InitPanel(object obj)
@@ -60,6 +63,8 @@ namespace ZPI_Paletyzator.View
                 originalHeight = PanelObject.ActualHeight;
             }
         }
+
+
 
         public void GetPanelSize(object obj)
         {
@@ -74,15 +79,17 @@ namespace ZPI_Paletyzator.View
                 Camera.FieldOfView = fov / Math.PI * 180.0;
                 Camera.NearPlaneDistance = originalNearPlaneDistance * scale;
 
-                double heightRatio = PanelObject.ActualHeight / originalHeight;
-                AxisY = 2;
-                AxisY *= Math.Pow(heightRatio,2);
-                AxisY += AxisOffsetY;
+                //double heightRatio = PanelObject.ActualHeight / originalHeight;
+                //AxisY = 2;
+                //AxisY *= Math.Pow(heightRatio,2);
+                //AxisY += AxisOffsetY;
 
 
                 SetCamera();
             }
         }
+
+
 
         public void MouseMove(object obj)
         { 
@@ -115,11 +122,11 @@ namespace ZPI_Paletyzator.View
                 {
                     double newCameraR = CameraR + (deltaY * Pix2AngleY) * 10;
 
-                    if (newCameraR >= 20 && newCameraR < 35)
+                    if (newCameraR >= 10 && newCameraR < 50)
                     {
                         CameraR = newCameraR;
-                        AxisY += deltaY * Pix2AngleY * 4;
-                        AxisOffsetY += deltaY * Pix2AngleY * 4;
+                        //AxisY += deltaY * Pix2AngleY * 4;
+                        //AxisOffsetY += deltaY * Pix2AngleY * 4;
                     }
                 }
 
@@ -130,6 +137,8 @@ namespace ZPI_Paletyzator.View
             }
         }
 
+
+
         private void SetCamera()
         {
             CameraPositionX = ObserverX(AngleX, AngleY);
@@ -137,10 +146,11 @@ namespace ZPI_Paletyzator.View
             CameraPositionZ = ObserverZ(AngleX, AngleY);
 
             Camera.Position = new Point3D(CameraPositionX, CameraPositionY, CameraPositionZ);
-            Camera.LookDirection = new Vector3D(-CameraPositionX, AxisY - CameraPositionY, -CameraPositionZ);
+            Camera.LookDirection = new Vector3D(-CameraPositionX, /*AxisY*/ - CameraPositionY, -CameraPositionZ);
             
             CopyCamera?.Invoke(Camera);
         }
+
 
 
         public double ObserverX(double azimuth, double altitude)
@@ -148,10 +158,14 @@ namespace ZPI_Paletyzator.View
             return CameraR * Math.Cos(azimuth) * Math.Cos(altitude);
         }
 
+
+
         public double ObserverY(double altitude)
         {
             return CameraR * Math.Sin(altitude);
         }
+
+
 
         public double ObserverZ(double azimuth, double altitude)
         {
@@ -159,23 +173,34 @@ namespace ZPI_Paletyzator.View
         }
 
 
+
         public void MouseLeftButtonDown(object obj)
         {
             MouseLeftButtonStatus = true;
         }
+
+
+
         public void MouseLeftButtonRelease(object obj)
         {
             MouseLeftButtonStatus = false;
         }
+
+
 
         public void MouseRightButtonDown(object obj)
         {
             MouseRightButtonStatus = true;
         }
 
+
+
         public void MouseRightButtonRelease(object obj)
         {
             MouseRightButtonStatus = false;
         }
+
+
+
     }
 }

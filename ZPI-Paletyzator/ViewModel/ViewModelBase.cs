@@ -17,6 +17,7 @@ namespace ZPI_Paletyzator.ViewModel
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        protected Action SetPropertyChangedDelegate => RaiseSetPropertyChangedEvent;
 
         protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName]string propertyName = null)
         {
@@ -28,7 +29,7 @@ namespace ZPI_Paletyzator.ViewModel
             }
             return false;
         }
-        protected void RaiseSetPropertyChangedEvent()
+        private void RaiseSetPropertyChangedEvent()
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }

@@ -1,21 +1,21 @@
-﻿<Window x:Class="ZPI_Paletyzator.View.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZPI_Paletyzator.View"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviors="clr-namespace:ZPI_Paletyzator.Helper"
+        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="ZPI_Paletyzator.View.MainWindow"
         mc:Ignorable="d"
         Title="Palletizer Layout Calculator" 
         SizeToContent="WidthAndHeight" Icon="/ZPI-Paletyzator;component/Helper/icons8-fork-lift-64.png"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:behaviors="clr-namespace:ZPI_Paletyzator.Helper"
-        MinHeight="530" MinWidth="780"> 
+        MinHeight="530" MinWidth="780">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="*">
-            </ColumnDefinition>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
 
@@ -24,11 +24,11 @@
             <Grid Margin="10 0 0 0">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="1">
@@ -39,28 +39,28 @@
                     <Grid Margin="0 0 5 0">
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" ></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <Label Content="Height:" Grid.Row="0" Grid.Column="0"/>
-                        <TextBox Text="{Binding Path=PackageHeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="0" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
+                        <TextBox Text="{Binding PackageHeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="0" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
                         <Label Content="Width:" Grid.Row="1" Grid.Column="0"/>
-                        <TextBox Text="{Binding Path=PackageWidth, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="1" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True" />
+                        <TextBox Text="{Binding PackageWidth, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="1" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True" />
                         <Label Content="Length:" Grid.Row="2" Grid.Column="0"/>
-                        <TextBox Text="{Binding Path=PackageLength, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="2" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
+                        <TextBox Text="{Binding PackageLength, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="2" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
                         <Label Content="Weight:" Grid.Row="3" Grid.Column="0"/>
-                        <TextBox Text="{Binding Path=PackageWeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="3" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
+                        <TextBox Text="{Binding PackageWeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="3" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
 
                     </Grid>
 
-                    <CheckBox Content="Seam facing front of the production line" Command="{Binding Path=SeamFacingFrontCommand}" Margin="10" IsTabStop="False"/>
+                    <CheckBox Content="Seam facing front of the production line" Command="{Binding SeamFacingFrontCommand}" Margin="10" IsTabStop="False"/>
 
                 </StackPanel>
 
@@ -68,27 +68,27 @@
 
                     <Label Content="Palette Patameters [mm, kg]" FontSize="18" FontWeight="DemiBold" Margin="0 0 5 0"/>
                     <Separator Opacity="0.25"/>
-                    <CheckBox Name="EuroPaletteCheckbox" Content="Using EuroPalette" Command="{Binding Path=EuroPaletteCommand}" Margin="10" IsTabStop="False"/>
+                    <CheckBox x:Name="EuroPaletteCheckbox" Content="Using EuroPalette" Command="{Binding EuroPaletteCommand}" Margin="10" IsTabStop="False"/>
                     <Grid Margin="0 0 5 0">
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <Label Content="Width:" Grid.Row="0" Grid.Column="0"/>
-                        <TextBox Text="{Binding Path=PaletteWidth, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="0" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
+                        <TextBox Text="{Binding PaletteWidth, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="0" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
                             <TextBox.Style>
-                                <Style TargetType="TextBox">
+                                <Style TargetType="{x:Type TextBox}">
                                     <Setter Property="IsEnabled" Value="True"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=EuroPaletteCheckbox, Path=IsChecked}" Value="True">
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=EuroPaletteCheckbox}" Value="True">
                                             <Setter Property="IsEnabled" Value="False"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -96,12 +96,12 @@
                             </TextBox.Style>
                         </TextBox>
                         <Label Content="Length:" Grid.Row="1" Grid.Column="0" />
-                        <TextBox Text="{Binding Path=PaletteLength, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="1" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
+                        <TextBox Text="{Binding PaletteLength, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="1" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
                             <TextBox.Style>
-                                <Style TargetType="TextBox">
+                                <Style TargetType="{x:Type TextBox}">
                                     <Setter Property="IsEnabled" Value="True"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=EuroPaletteCheckbox, Path=IsChecked}" Value="True">
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=EuroPaletteCheckbox}" Value="True">
                                             <Setter Property="IsEnabled" Value="False"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -109,12 +109,12 @@
                             </TextBox.Style>
                         </TextBox>
                         <Label Content="Max weight:" Grid.Row="2" Grid.Column="0" />
-                        <TextBox Text="{Binding Path=PaletteMaxWeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="2" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
+                        <TextBox Text="{Binding PaletteMaxWeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="2" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True">
                             <TextBox.Style>
-                                <Style TargetType="TextBox">
+                                <Style TargetType="{x:Type TextBox}">
                                     <Setter Property="IsEnabled" Value="True"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=EuroPaletteCheckbox, Path=IsChecked}" Value="True">
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=EuroPaletteCheckbox}" Value="True">
                                             <Setter Property="IsEnabled" Value="False"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -122,65 +122,86 @@
                             </TextBox.Style>
                         </TextBox>
                         <Label Content="Max height:" Grid.Row="3" Grid.Column="0"/>
-                        <TextBox Text="{Binding Path=PaletteMaxHeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="3" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
+                        <TextBox Text="{Binding PaletteMaxHeight, UpdateSourceTrigger=PropertyChanged}" Margin="0 2" Grid.Row="3" Grid.Column="1" behaviors:TextBoxBehavior.SelectAllTextOnFocus="True"/>
 
                     </Grid>
 
                 </StackPanel>
 
                 <Grid Grid.Row="3" Margin="0 10 5 10">
-                    <Button Command="{Binding Path=CalculateCommand}" Content="Calculate" FontSize="14" FontWeight="Bold" Padding="5 2" Margin="5" Grid.Column="0" />
+                    <Button Command="{Binding CalculateCommand}" Content="Calculate" FontSize="14" FontWeight="Bold" Padding="5 2" Margin="5" Grid.Column="0" />
                 </Grid>
 
             </Grid>
 
         </Grid>
 
+        <Grid Grid.Column="1">
 
-        <Viewport3D Grid.Column="1" MinHeight="480" MinWidth="500" Margin="3" IsHitTestVisible="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <Viewport3D.Camera>
-                <PerspectiveCamera Position = "{Binding ViewPortDataSource.MainCamera.Position}"
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Slider Name="LevelSlider" Grid.Row="0" Width="20" Margin="5" Orientation="Vertical" SmallChange="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Maximum="{Binding ViewPortDataSource.Levels}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding ViewPortDataSource.SlideChangeValue}" CommandParameter="{Binding ElementName=LevelSlider}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Slider>
+                <CheckBox Grid.Row="1" Margin="5 10 5 10" Content="Focus" IsTabStop="False" Command="{Binding ViewPortDataSource.IsLevelFocusOn}" />
+            </Grid>
+
+            <Viewport3D Grid.Column="1" MinHeight="480" MinWidth="500" Margin="3" IsHitTestVisible="False">
+
+                <Viewport3D.Camera>
+                    <PerspectiveCamera Position = "{Binding ViewPortDataSource.MainCamera.Position}"
                                    LookDirection = "{Binding ViewPortDataSource.MainCamera.LookDirection}"
                                    FieldOfView ="{Binding ViewPortDataSource.MainCamera.FieldOfView}" 
                                    UpDirection = "0, 1, 0"/>
-            </Viewport3D.Camera>
+                </Viewport3D.Camera>
 
-            <Viewport3D.Children>
                 <ModelVisual3D Content="{Binding ViewPortDataSource.ModelSource}"/>
                 <ModelVisual3D Content="{Binding ViewPortDataSource.LightModel}"/>
-            </Viewport3D.Children>
-        </Viewport3D>
+            </Viewport3D>
 
-        <Canvas Name="CanvasAboveViewport" Grid.Column="1" MinHeight="480" MinWidth="500" Background="Transparent" Margin="3">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Loaded" >
-                    <i:InvokeCommandAction Command="{Binding ViewPortDataSource.InitPanelCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="SizeChanged" >
-                    <i:InvokeCommandAction Command="{Binding ViewPortDataSource.GetPanelSizeCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonDown" >
-                    <i:InvokeCommandAction Command="{Binding ViewPortDataSource.LeftButtonDownCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp" >
-                    <i:InvokeCommandAction Command="{Binding ViewPortDataSource.LeftButtonReleaseCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}" />
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseRightButtonDown" >
-                    <i:InvokeCommandAction Command="{Binding ViewPortDataSource.RightButtonDownCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseRightButtonUp" >
-                    <i:InvokeCommandAction Command="{Binding ViewPortDataSource.RightButtonReleaseCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}" />
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeave" >
-                    <i:InvokeCommandAction Command="{Binding ViewPortDataSource.LeftButtonReleaseCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}" />
-                    <i:InvokeCommandAction Command="{Binding ViewPortDataSource.RightButtonReleaseCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}" />
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseMove" >
-                    <i:InvokeCommandAction Command="{Binding ViewPortDataSource.MoveCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Canvas>
+            <Canvas x:Name="CanvasAboveViewport" Grid.Column="1" MinHeight="480" MinWidth="500" Background="Transparent" Margin="3">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded" >
+                        <i:InvokeCommandAction Command="{Binding ViewPortDataSource.InitPanelCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="SizeChanged" >
+                        <i:InvokeCommandAction Command="{Binding ViewPortDataSource.GetPanelSizeCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonDown" >
+                        <i:InvokeCommandAction Command="{Binding ViewPortDataSource.LeftButtonDownCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonUp" >
+                        <i:InvokeCommandAction Command="{Binding ViewPortDataSource.LeftButtonReleaseCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseRightButtonDown" >
+                        <i:InvokeCommandAction Command="{Binding ViewPortDataSource.RightButtonDownCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseRightButtonUp" >
+                        <i:InvokeCommandAction Command="{Binding ViewPortDataSource.RightButtonReleaseCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeave" >
+                        <i:InvokeCommandAction Command="{Binding ViewPortDataSource.LeftButtonReleaseCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}" />
+                        <i:InvokeCommandAction Command="{Binding ViewPortDataSource.RightButtonReleaseCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseMove" >
+                        <i:InvokeCommandAction Command="{Binding ViewPortDataSource.MoveCommand}" CommandParameter="{Binding ElementName=CanvasAboveViewport}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Canvas>
+        </Grid>
 
     </Grid>
 

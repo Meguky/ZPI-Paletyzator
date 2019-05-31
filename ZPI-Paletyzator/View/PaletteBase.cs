@@ -45,12 +45,19 @@ namespace ZPI_Paletyzator.View
                 PaletteWidth = 3;
         }
 
+
+        public double GetVisualMilimeter()
+        {
+            return _visualMilimeter;
+        }
+
+
         public Model3DGroup GetModel()
         {
             var model = new Model3DGroup();
             model.Children.Add(FlatPartGenerator());
             model.Children.Add(GroundPartsGenerator());
-            model.Children.Add(GroundGenerator());
+            //model.Children.Add(GroundGenerator());
 
             return model;
         }
