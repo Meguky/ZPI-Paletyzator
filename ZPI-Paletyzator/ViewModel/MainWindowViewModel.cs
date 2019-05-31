@@ -60,10 +60,13 @@ namespace ZPI_Paletyzator.ViewModel
 
         private bool CanCalculate(object commandParameter)
         {
-            if (PackageHeight != 0 && PackageWidth != 0 && PackageLength != 0 && PackageWeight != 0 && PaletteWidth != 0 && PaletteLength != 0 && PaletteMaxWeight != 0 && PaletteMaxHeight != 0)
-                return true;
-            else
-                return false;
+            if (PackageHeight > 0 && PackageWidth > 0 && PackageLength > 0 && PackageWeight > 0 && PaletteWidth > 0 && PaletteLength > 0 && PaletteMaxWeight > 0 && PaletteMaxHeight > 0)
+            {
+                if (PackageLength <= PaletteLength && PackageWidth <= PaletteWidth)
+                    return true;
+            }
+
+            return false;
         }
 
 

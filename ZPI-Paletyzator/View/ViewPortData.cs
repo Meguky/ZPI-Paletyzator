@@ -113,6 +113,8 @@ namespace ZPI_Paletyzator.View
             TranslationGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90)));
             TranslationGroup.Children.Add(new TranslateTransform3D(new Vector3D(0, 0, 0)));
             ModelSource.Transform = TranslationGroup;
+
+            ChangeFocus();
         }
 
 
